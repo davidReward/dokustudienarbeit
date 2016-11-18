@@ -1,7 +1,7 @@
-studienarbeit.pdf
-studienarbeit.aux
-studienarbeit.lof
-studienarbeit.log
-studienarbeit.lot
-studienarbeit.out
-studienarbeit.toc
+*.pdf
+*.aux
+*.lof
+*.log
+*.lot
+*.out
+*.toc
