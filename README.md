@@ -1,1 +1,1 @@
-# dokustudienarbeit von Jan Gerber und David Preiss.
+# Dokumentation der Studienarbeit von Jan Gerber und David Preiss.
