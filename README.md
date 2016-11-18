@@ -1,1 +1,1 @@
-# Dokumentation der Studienarbeit von Jan Gerber und David Preiss.
+# Dieses Repo enthält die Dokumentation der Studienarbeit von Jan Gerber und David Preiss.
