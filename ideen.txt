@@ -1,0 +1,5 @@
+-Datenbanken
+-Dekodierung
+-Verschlüsselung
+-Interrupts
+-
