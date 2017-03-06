@@ -2,4 +2,10 @@
 -Dekodierung
 -Verschlüsselung
 -Interrupts
--
+-Signale in Unix und Python
+-SQLite3 (und Python)
+    -Ignore an error für doppelte Datensaetze
+-Hashing
+-DB-Design#
+
+
