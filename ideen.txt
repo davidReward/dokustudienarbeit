@@ -7,5 +7,7 @@
     -Ignore an error für doppelte Datensaetze
 -Hashing
 -DB-Design#
-
+-REST
+-Flask
+-Python
 
