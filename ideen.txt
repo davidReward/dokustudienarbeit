@@ -1,6 +1,6 @@
 -Datenbanken
 -Dekodierung
--Verschlüsselung
+(-Verschlüsselung)
 -Interrupts
 -Signale in Unix und Python
 -SQLite3 (und Python)
