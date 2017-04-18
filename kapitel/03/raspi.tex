@@ -4,3 +4,58 @@ Der Raspberry Pi stellt in diesem Projekt unter anderem die Schnittstelle zum We
 \item Es kann das gleiche Funkmodul wie für die Arduinos verwendet werden
 \item Es ist eine große Community vorhanden
 \end{itemize}
+Ferner handelt es sich beim Raspberry Pi um einen Ein-Platinen-Rechner. 
+
+\subsection{Hardware}
+Bei dem Hauptprozessor des Raspberry Pi handelt es sich um einen Broadcom BCM2835. Die Architektur des Prozessors nennt sich \textit{ARM}. ARM hat einige Vorteile gegenüber x86 Prozessoren: 
+\begin{itemize}
+\item kleiner Energiebedarf
+\item geringe Wärmeentwicklung
+\subitem normalerweise keine Kühlung notwendig
+\item kleine Bauweise
+\end{itemize}
+
+\subsubsection{Allgemein}
+Die ARM-Architektur besitzt folgende Eigenschaften: 
+\begin{itemize}
+\item \ac{RISC}
+\item 32-Bit Daten- und Adressbus
+\item 7 Prozessor Modi
+\item 37 Register
+\item 5 Hauptadressierungsmodi
+\item Datentypen
+\subitem 32 Bit Wort
+\subitem 16 Bit Halbwort
+\subitem Byte (8 Bit)
+\item Instruktionen
+\subitem 54 ARM-Instruktionen, sie sind jeweils ein Wort
+\subitem 38 Thumb-Instruktionen
+\subitem Datenverarbeitungen werden auf Wörter angewandt
+\end{itemize}
+
+\subsubsection{Modi}
+\begin{table}
+    \begin{tabular}{lll}
+    Modus          & Beschreibung                    & Ausnahme-Modus? \\ \hline
+    User           & Ausführung normaler Programme   & nein            \\
+    System         & privelegierter Modus            & nein            \\
+    Supervisor     & Modus für Systemcalls           & ja              \\
+    Abort          & Memory Abort                    & ja              \\
+    Undefined      & Undefinierte Anweisung (Fehler) & ja              \\
+    Interrupt      & Modus für Interrupts            & ja              \\
+    Fast Interrupt & Modus für schnellen Interrupt   & ja              \\
+    \end{tabular}
+    \caption {ARM-Modi}
+\end{table}
+Der User-Modus ist der einzige Modus ohne Privilegien, die anderen Modi haben mehr Rechte wie der User-Modus. In User-Modus werden standardmäßig Programme ausgeführt. Einige Register sind Modussensitiv, soll heißen, dass sie nur in einem bestimmten Modus nutzbar sind. Wenn der Rechner startet, befindet sich der Prozessor im Supervisor-Modus. Später kann von jedem Modus aus gewechselt werden, außer aus dem User-Modus. Man kann ihn nur über einen Softwareinterrupt verlassen. 
+\subsubsection{Register}
+Im User-Modus kann man über die Register R0 bis R12 frei verfügen. Register R13 ist der Stackpointer, Register R14 das Linkregister. Das Linkregister merkt sich die Return-Adresse um nach einem Funktionsaufruf zurückzukehren. Das Register R15 ist wird als Programm-Counter genutzt.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{bilder/overviewRegister} 
+\caption{Überblick über die Register}
+\label{Register}
+\end{figure}
+ 
+ 
+Quelle: arm-2009.pdf
