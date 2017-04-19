@@ -47,15 +47,23 @@ Die ARM-Architektur besitzt folgende Eigenschaften:
     \end{tabular}
     \caption {ARM-Modi}
 \end{table}
-Der User-Modus ist der einzige Modus ohne Privilegien, die anderen Modi haben mehr Rechte wie der User-Modus. In User-Modus werden standardmäßig Programme ausgeführt. Einige Register sind Modussensitiv, soll heißen, dass sie nur in einem bestimmten Modus nutzbar sind. Wenn der Rechner startet, befindet sich der Prozessor im Supervisor-Modus. Später kann von jedem Modus aus gewechselt werden, außer aus dem User-Modus. Man kann ihn nur über einen Softwareinterrupt verlassen. 
+Ein Interrupt und ein Fast Interrupt unterscheiden sich in ihrer Priorität. Ein Fast Interrupt kann also einen Interrupt unterbrechen. Es darf jedoch nur ein Fast Interrupt zu einem Zeitpunkt auftreten. Der User-Modus ist der einzige Modus ohne Privilegien, die anderen Modi haben mehr Rechte wie der User-Modus. In User-Modus werden standardmäßig Programme ausgeführt. Einige Register sind Modussensitiv, soll heißen, dass sie nur in einem bestimmten Modus nutzbar sind. Wenn der Rechner startet, befindet sich der Prozessor im Supervisor-Modus. Später kann von jedem Modus aus gewechselt werden, außer aus dem User-Modus. Man kann ihn nur über einen Softwareinterrupt verlassen. 
 \subsubsection{Register}
 Im User-Modus kann man über die Register R0 bis R12 frei verfügen. Register R13 ist der Stackpointer, Register R14 das Linkregister. Das Linkregister merkt sich die Return-Adresse um nach einem Funktionsaufruf zurückzukehren. Das Register R15 ist wird als Programm-Counter genutzt.
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{bilder/overviewRegister} 
-\caption{Überblick über die Register}
+\caption{Überblick über die Register Quelle: arm-2009.pdf}
 \label{Register}
 \end{figure}
+
+Das Statusregister ist im Detail wie folgt aufgebaut:
+\begin{figure}
+\includegraphics[width=\columnwidth]{bilder/statusRegister} 
+\caption{Das Statusregister im Detail Quelle: arm-2009.pdf}
+\label{Statusregister}
+\end{figure}
  
+Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt, das 29. Bit \textit{C} ist gesetzt, wenn das Ergebnis einer Operation eine Übertrag hat. Bit \textit{V} ist bei einem Overflow (Überlauf) gesetzt. Bit \textit{Q} fungiert bei ARM-Prozessoren, die als \ac{DSP} eingesetzt werden, als Überlaufbit für erweiterte Instruktionen. Die Bits 26 bis 8 sind undefiniert, Bit \textit{I} (7) ist das Interruptbit. Es ist bei einem Interrupt oder einem Fast Interrupt gesetzt.     
  
 Quelle: arm-2009.pdf
