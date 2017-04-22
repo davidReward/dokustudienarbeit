@@ -64,6 +64,46 @@ Das Statusregister ist im Detail wie folgt aufgebaut:
 \label{Statusregister}
 \end{figure}
  
-Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt, das 29. Bit \textit{C} ist gesetzt, wenn das Ergebnis einer Operation eine Übertrag hat. Bit \textit{V} ist bei einem Overflow (Überlauf) gesetzt. Bit \textit{Q} fungiert bei ARM-Prozessoren, die als \ac{DSP} eingesetzt werden, als Überlaufbit für erweiterte Instruktionen. Die Bits 26 bis 8 sind undefiniert, Bit \textit{I} (7) ist das Interruptbit. Es ist bei einem Interrupt oder einem Fast Interrupt gesetzt.      
+Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt, das 29. Bit \textit{C} ist gesetzt, wenn das Ergebnis einer Operation eine Übertrag hat. Bit \textit{V} ist bei einem Overflow (Überlauf) gesetzt. Bit \textit{Q} fungiert bei ARM-Prozessoren, die als \ac{DSP} eingesetzt werden, als Überlaufbit für erweiterte Instruktionen. Die Bits 26 bis 8 sind undefiniert, Bit \textit{I} (7) ist das Interruptbit. Es ist bei einem Interrupt gesetzt. Bit \textit{F} (6) ist das Fast Interrupt-Bit. Es ist dementsprechend gesetzt. Das Bit \textit{T} (5) gibt den zeigt an, ob der Thumb-Mode aktiv ist. Im Thumb-Mode sind die Instruktionen nicht 32 Bit lang, sondern nur 16 Bit. Instruktionen im Thumb-Mode sind bieten demnach weniger Optionen. Sie arbeiten häufig implizit. Der Vorteil von Thumb-Instruktionen ist, dass die Instruktionen weniger Speicher benötigen. Die Abarbeitngsgeschwindigkeit von 32 Bit Instruktionen und Thumb-Instruktionen ist identisch. Die Bits 4 bis 0 kodieren den Modus der CPU:
+\begin{table}
+    \begin{tabular}{l|l}
+    Bit M\textsubscript{4}, ..., M\textsubscript{0}  & Modus          \\ \hline
+    10000 & User           \\
+    10001 & Fast Interrupt \\
+    10010 & Interrupt      \\
+    10011 & Supervisor     \\
+    10111 & Abort          \\
+    11011 & Undefined      \\
+    11111 & System         \\
+    \end{tabular}
+    \caption {Modi im ARM Statusregister}
+\end{table}
+
+\subsubsection{Memory Management Unit}
+ARM-Prozessoren verfügen wie auch x86-Prozessoren über eine \ac{MMU}. Dieser Hardware-Baustein hat die Aufgabe virtuelle Speicheradressen in reale Speicheradressen zu übersetzten. Dies hat mehrere Vorteile: 
+\begin{itemize}
+\item einfacherer Umgang mit Adressen
+\item Erhöhung der Sicherheit 
+\item keine großen, ungenutzten Speicherstellen am Stück 
+\end{itemize}
+
+\begin{figure}
+\includegraphics[scale=0.3]{bilder/mmu} 
+\caption{Virtuelle Adressierung Quelle: Richter}
+\label{MMU}
+\end{figure}
+
+Die Virtuelle Adresse (V-Address) besteht aus 
+TODO Quelle: Richter
  
-Quelle: arm-2009.pdf
+\subsection{Software}
+Nach dem die Grundlegenden Hardware
+
+
+
+
+
+
+          
+ 
+TODO Quelle: arm-2009.pdf
