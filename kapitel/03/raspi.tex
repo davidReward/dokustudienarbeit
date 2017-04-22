@@ -93,12 +93,28 @@ ARM-Prozessoren verfügen wie auch x86-Prozessoren über eine \ac{MMU}. Dieser H
 \label{MMU}
 \end{figure}
 
-Die Virtuelle Adresse (V-Address) besteht aus 
+Die Virtuelle Adresse (V-Address) besteht (vereinfacht) aus einer Adresse für das Page Directory, der Adresse für die eigentliche Page und dem Offset innerhalb der Page. \textit{P} und \textit{W} in der Abbildung sind Bits. Ist das \textit{P}-Bit gesetzt, so ist die jeweilige Seite im Hauptspeicher verfügbar. Ist das \textit{W}-Bit gesetzt, so darf auf die Page geschrieben werden. Das \textit{W}-Bit ist für weitere Mechanismen notwendig. Diese sind jedoch nicht Gegenstand dieser Arbeit.  
+
+Dadurch, dass der Prozessor nicht mit realen Adressen arbeiten muss, muss der Programmierer oder Compiler die konkreten realen Adressen nicht kennen. Nun ist es möglich zu realisieren, dass es für Programme so aussieht, als wäre der zugeteilte Speicherbereich am Stück. Physikalisch ist der zugewiesene Speicher jedoch über den ganzen RAM verteilt. Ferner ist es auch der Fall, dass ein Betriebssystem ständig Programme startet und beendet. Endet ein Programm, so muss man den allokierten   Speicherbereich wieder dellokieren. Die virtuelle Adressierung verhindert in diesem Zusammenhang, dass groß Speicherbereiche "brach" liegen. Würde man kein virtuelle Adressierung verwenden, so ist nach dem Ende eines Programmes, dass 1 Gb Speicher benutzt hat, eine 1 Gb große Lücke im Speicher. Dieser Umstand kann zu Problemen führen, wenn ein neues Programm startet und viel Speicher benötigt. Im Falle der virtuellen Adressierung ist es irrelevant, ob der angeforderte Speicher am Stück ist oder ob die benutzen Speicherstellen über den RAM verteilt sind.    
+
 TODO Quelle: Richter
+
+\subsubsection{Externe Anschlüsse}
+Der Raspberry Pi verfügt über mehrere physikalische Schnittstellen. 
+\begin{itemize}
+\item \ac{GPIO}
+\item USB
+\item 3,5 mm Klinke für Audio
+\item \ac{CSI}
+\item RJ45 für Ethernet
+\item HDMI
+\item \ac{DSI}
+\end{itemize}
  
 \subsection{Software}
-Nach dem die Grundlegenden Hardware
-
+Dieses Unterkapitel betrachtet 
+ 
+TODO Exceptions und Assembler hier
 
 
 
