@@ -78,7 +78,7 @@ Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt,
     \end{tabular}
     \caption {Modi im ARM Statusregister}
 \end{table}
-TODO Quelle: arm-2009.pdf
+%TODO Quelle: arm-2009.pdf
 
 \subsubsection{Memory Management Unit}
 ARM-Prozessoren verfügen wie auch x86-Prozessoren über eine \ac{MMU}. Dieser Hardware-Baustein hat die Aufgabe virtuelle Speicheradressen in reale Speicheradressen zu übersetzten. Dies hat mehrere Vorteile: 
@@ -98,7 +98,7 @@ Die Virtuelle Adresse (V-Address) besteht (vereinfacht) aus einer Adresse für d
 
 Dadurch, dass der Prozessor nicht mit realen Adressen arbeiten muss, muss der Programmierer oder Compiler die konkreten realen Adressen nicht kennen. Nun ist es möglich zu realisieren, dass es für Programme so aussieht, als wäre der zugeteilte Speicherbereich am Stück. Physikalisch ist der zugewiesene Speicher jedoch über den ganzen RAM verteilt. Ferner ist es auch der Fall, dass ein Betriebssystem ständig Programme startet und beendet. Endet ein Programm, so muss man den allokierten   Speicherbereich wieder dellokieren. Die virtuelle Adressierung verhindert in diesem Zusammenhang, dass groß Speicherbereiche "brach" liegen. Würde man kein virtuelle Adressierung verwenden, so ist nach dem Ende eines Programmes, dass 1 Gb Speicher benutzt hat, eine 1 Gb große Lücke im Speicher. Dieser Umstand kann zu Problemen führen, wenn ein neues Programm startet und viel Speicher benötigt. Im Falle der virtuellen Adressierung ist es irrelevant, ob der angeforderte Speicher am Stück ist oder ob die benutzen Speicherstellen über den RAM verteilt sind.    
 
-TODO Quelle: Richter
+%TODO Quelle: Richter
 
 \subsubsection{Externe Anschlüsse}
 Der Raspberry Pi verfügt über mehrere physikalische Schnittstellen. 
@@ -114,7 +114,7 @@ Der Raspberry Pi verfügt über mehrere physikalische Schnittstellen.
 
 Die \ac{GPIO}-Pins ermöglichen unter anderem eine Kommunikation über \ac{I2C} und den \ac{SPI}. 
 
-\paragraph{\ac{I2C}} Bei \ac{I2C} handelt es sich um einen seriellen Bus mit zwei Leitungen. Es gibt die Leitung SCL (Signal Clock) und SDA (Signal Data). Da mit SCL eine Taktleitung vorhanden ist, redet man von einem synchronen Bus. Der Bus arbeitet nach dem Master/Slave-Prinzip. Er ist des Weiteren auch Multi-Master-fähig. Es können mehere Teilnehmer die Rolle des Masters einnehmen. Prinzipiell können Master zwei Operationen durchführen: 
+\subsubsection{\ac{I2C}} Bei \ac{I2C} handelt es sich um einen seriellen Bus mit zwei Leitungen. Es gibt die Leitung SCL (Signal Clock) und SDA (Signal Data). Da mit SCL eine Taktleitung vorhanden ist, redet man von einem synchronen Bus. Der Bus arbeitet nach dem Master/Slave-Prinzip. Er ist des Weiteren auch Multi-Master-fähig. Es können mehere Teilnehmer die Rolle des Masters einnehmen. Prinzipiell können Master zwei Operationen durchführen: 
 \begin{itemize}
 \item Lesen
 \item Schreiben
@@ -128,33 +128,45 @@ Um einen reibungslosen Ablauf zu gewährleisten, organisiert sich der Bus durch
 \end{itemize}
 Bevor ein Master mit einer Operation beginnen kann, muss er prüfen, ob dieser frei ist. Ist der Bus frei, so sind beide Leitungen auf HIGH (fünf Volt). 
 
-%TODO: i2c_frei
+%TODO : i2c_frei
 
 Nun kann der Master seine Transaktion mit der Startbedingung ankündigen. Dazu lässt er die Taktleitung SCL auf HIGH und legt die Datenleitung über einen Pull-down-Widerstand auf Masse (LOW). Diese Vorgehensweise ermöglicht die Mult-Master-Fähigkeit. Möchte jetzt ein weiterer Master eine Übertragung an diesem Bus starteten, so fällt ihm bei Prüfen des Busses auf, dass SDA LOW ist. An dieser Tatsache kann er auch nichts ändern. Der Strom fließt über den Pull-down-Widerstand des aktiven Masters auf Masse ab. Nur der aktive Master kann SDA wieder auf HIGH legen und den Bus damit wieder frei geben.  
 
-%TODO: i2c_start
+%TODO : i2c_start
 
 Daten sind wie folgt kodiert: Für eine logische Null zieht der entsprechende Teilnehmer die Datenleitung (SDA) auf LOW. In der Zeit, in der die Taktleitung HIGH ist, gilt die logische Null. 
 
-%TODO: i2c_0
+%TODO : i2c_0
 
 Für eine logische Eins läßt der Busteilnehmer die Datenleitung auf HIGH. Auch die logische Eins gilt so lange, bis SCL HIGH ist. 
 
-%TODO: i2c_1
+%TODO : i2c_1
 
-Nur ein Master kann eine Operation starten mittels Startbedingung (sofern der Bus frei ist). Nach dem ein Master nun 
+Nur ein Master kann eine Operation starten mittels Startbedingung (sofern der Bus frei ist). Nach dem ein Master eine den Bus erfolgreich reserviert hat, schreibt er ein Byte auf die Leitung. Die ersten 7 Bit des Bytes sind eine Adresse. Sie gehört dem Slave, mit dem der Master kommunizieren möchte. Bei \ac{I2C}  kann man somit 128 verschiedene Adressen vergeben. Das letzte Bit von dem Byte gibt die Richtung des Informationsflusses an. Der Master kann entweder lesen (1) oder schreiben (0). Diesem ersten Byte lauschen alle Geräte. Erkennt ein Slave seine Adresse auf dem Bus und er ist verfügbar, so sendet er ein Acknowledge.
+
+%TODO i2c_ack
+
+Erkennt ein Gerät seine Adresse, ist aber nicht verfügbar, so sendet es ein No-Acknowledge.
+
+%TODO i2c-noAck
+
+Um eine Übertragung zu beenden, zieht der Master die Datenleitung auf LOW, die Taktleitung bleibt währenddessen auf HIGH. 
+
+% http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
+
+\subsubsection{\ac{SPI}}
 
  
 
 
 
 
-TODO Quelle: Rasi Handbuch, VL Lehmann
+%TODO Quelle: Rasi Handbuch, VL Lehmann
  
 \subsection{Software}
 Dieses Unterkapitel betrachtet 
  
-TODO Exceptions und Assembler hier (aus arm-2009)
+%TODO Exceptions und Assembler hier (aus arm-2009)
 
 
 
