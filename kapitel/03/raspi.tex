@@ -152,10 +152,16 @@ Erkennt ein Gerät seine Adresse, ist aber nicht verfügbar, so sendet es ein No
 
 Um eine Übertragung zu beenden, zieht der Master die Datenleitung auf LOW, die Taktleitung bleibt währenddessen auf HIGH. 
 
-% http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
+%TODO Bilder: http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
+
+%TODO Quelle: Rasi Handbuch, VL Lehmann
 
 \subsubsection{\ac{SPI}}
+Bei \ac{SPI} kann man relativ hohe Datenübertragungsraten erreichen. Dazu darf allerdings die Wegstrecke der Leitungen nur relativ klein sein (auf einem Chip). Die Spezifikation von \ac{SPI} ist weiter gefasst als die von \ac{I2C}. Ferner handelt es sich bei \ac{SPI} um kein Bussystem im klassischen Sinne. Jedes Gerät benötigt nämlich unter anderem eine eigene Leitung. Auch eine exakte Spezifikation der Geräte sieht \ac{SPI} nicht vor. 
 
+%TODO Bild spi einfügen, Quelle rapi Handbuch
+
+Es folgt eine Beschreibung, wie die \ac{SPI}-Kommunikation beim Raspberry Pi aussehen kann: Der Master legt einen Takt von 100 kHz auf die Taktleitung SCK. Nun selektiert er über eine Slave-select-Leitung (SS) einen Slave. Die SS-Leitung ist LOW-aktiv. Das heißt, dass die Leitung im unselektierten Zustand HIGH ist, im selektierten Zustand ist sie LOW. 
 
  
 
