@@ -80,6 +80,26 @@ Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt,
 \end{table}
 %TODO Quelle: arm-2009.pdf
 
+\subsubsection{Exceptions}
+Der ARM-Prozessoren kennen typischer sieben verschiedene Exceptions (Ausnahmen). Sie haben folgende Priorität:
+\begin{enumerate}
+\item Reset
+\item Data Abort
+\item Fast Interrupt Request
+\item Interrupt Request
+\item Prefetch Abort
+\item Undefined Instruction
+\setcounter{enumi}{5} %% folgendes item soll (auch) die nummer 6 haben
+\item Software Interrupt
+\end{enumerate}
+
+Kommt es zur Exception \textit{Reset}, bricht der Prozessor seine Arbeit an der momentanen Stelle ab und springt sofort zur Adresse, die der Reset-Exception zugeteilt ist. Diese Adresse der Speicherstelle an die der Prozessor nach dem Start springt, ist mit der Reset-Adresse identisch. 
+Greift ein Programm unberechtigterweise auf einen Speicherbereich zu, schmeißt der schmeißt das System die \textit{Data Abort}-Exception. Anschließend springt der Prozessor an eine definierte Speicherstelle. Hier kann der Programmierer die Exception durch Implementieren einer Routine abfangen. Ein \textit{Fast Interrupt Request} führt zur Abarbeitung der entsprechenden Methode wenn die Anfrage gültig ist, das heißt wenn der Prozessor gerade keine andere Exception und der Fast Interrupt Request eindeutig ist. Gleiches wie für den Fast Interrupt Request gilt auch für den Interrupt Request. Allerdings kann der hat der Interrupt Request eine niedrigere Priorität. Der Prozessor kann ihn nur behandeln, wenn keine Exception höherer Priorität auftritt. Dies kann beispielsweise ein Fast Interrupt Request sein. Externe Hardware kann ein (Fast) Interrupt Request auslösen. 
+Will der Prozessor beim Fetch auf eine Adresse zugreifen, auf die er kein Zugriff hat, so schmeißt er eine \textit{Prefetch Abort}-Exception. Kennt der Prozessor die geforderte Instruktion nicht, so kommt es zu eines \textit{Undefined Instruction}-Exception. Sie hat die gleiche Priorität wie die \textit{Software Interrupt}-Exception. Dies hat den Hintergrund, dass es nicht möglich ist, dass sie gleichzeitig auftreten. In einem Programm kann man explizit eine \textit{Softtware Interrupt} Exception auslösen.    
+
+
+%TODO Quelle: arm-2009.pdf 
+
 \subsubsection{Memory Management Unit}
 ARM-Prozessoren verfügen wie auch x86-Prozessoren über eine \ac{MMU}. Dieser Hardware-Baustein hat die Aufgabe virtuelle Speicheradressen in reale Speicheradressen zu übersetzten. Dies hat mehrere Vorteile: 
 \begin{itemize}
@@ -171,9 +191,9 @@ Es folgt eine Beschreibung, wie die \ac{SPI}-Kommunikation beim Raspberry Pi aus
 %TODO Quelle: Rasi Handbuch, VL Lehmann
  
 \subsection{Software}
-Dieses Unterkapitel betrachtet 
+Dieses Unterkapitel betrachtet die 
  
-%TODO Exceptions und Assembler hier (aus arm-2009)
+%TODO Exceptions und Assembler hier (aus arm-200)
 
 
 
