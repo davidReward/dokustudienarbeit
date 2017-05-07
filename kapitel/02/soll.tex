@@ -1,2 +1,15 @@
 \section{Soll-Zustand}
-
+Das Ziel der Studienarbeit ist es ein Sensorknoten für das Internet der Dinge zu entwickeln. Hierfür sollen mehrere Arduinos Sensordaten sammeln und diese an einen Raspberry Pi senden. Der Raspberry Pi sendet die gesammelten Daten und sendet sie zu einem externen Server. Der externe Server speichert die aufkommenden Daten in einer Datenbank und stellt sie über eine Webschnittstelle bereit. Die Präsentation der Daten erfolgt über ein Webinterface, auf das der Endbenutzter Zugriff hat. 
+\paragraph{Arduino} Der Arduino ist für das Sammeln der Daten zuständig. Er wertet hierfür mehrere Sensoren aus. Die Sensoren sind über verschiedene Bus-Systeme und analogen und digitale Pins angeschlossen. Die Sensoren werten mehrere Eigenschaften aus ihrer Umwelt aus, wie zum Beispiel Temperatur, Luftfeuchtigkeit, Luftdruck, Bewegung und Lichtintensität. 
+Die Arduinos nutzten ein Funkmodul um untereinander und mit dem Gateway (Raspberry Pi) zu kommunizieren. Um eine ständige Kommunikation mit dem Raspberry Pi sicherzustellen soll eine Art von Mesh-Netzwerk eingesetzt werden. Dieses erlaubt eine unterbrechungsfreie Kommunikation mit dem Raspberry Pi, falls ein Sensorknoten ausfallen würde.
+Um ein praktikablen Einsatz in verschiedenen Umgebungen zu gewährleisten sollten die Arduinos auch teilweise mit Batterien betrieben werden können. Die Arduinos sollten über mehrere Monate hinweg, mit einer Batterieladung, die Daten an den Raspberry senden können.
+\paragraph{Raspberry Pi}
+Der Raspberry stellt das Gateway zum Internet dar. Er empfängt alle Sensordaten, die mit Hilfe der Arduinos gesammelt wurden. Hierfür nutzt der Raspberry Pi das gleiche Funkmodul, dass auch bei den Arduinos verwendet wurde. Beim Starten des Raspberry Pi führt dieser automatisch die benötigten Programme aus um die Daten zu empfangen. Nachdem der Raspberry Pi die Daten Enkodiert hat sendet er diese an einen externen Server.
+\paragraph{Webservice}
+Der externe Server besitzt eine SQL Datenbank in der die Sensordaten gespeichert werden. Die Datenbank enthält nur Einträge von zuvor eingetragenen Stationen. Zusätzlich zu den Sensordaten sind zusätzliche Tabellen mit Informationen zu den einzelnen Sensorknoten vorhanden. Mit Hilfe einer REST-Schnittstelle können die Daten als Webservice abgerufen werden. Die Daten sollten zur einfacher Weiterverarbeitung im JSON Datenformat kodiert werden. Die Schnittstelle sollte mehrere Methoden zur Verfügung stellen:
+\begin{itemize}
+	\item Abruf aller verfügbaren Sensorknoten mit zusätzlichen Informationen, wie zum Beispiel Name und Aufstellungsort
+	\item Abruf der neusten Sensordaten eines Sensorknotens
+	\item Abruf aller Daten eines Sensor innerhalb eines bestimmten Zeitraumes
+\end{itemize}
+\paragraph{Webseite} Die Webseite dient zur Präsentation der gesammelten Daten. Der Nutzer soll sich mit Hilfe einer Benutzerkennung und eines Passworts authentifizieren können. Nach einer erfolgreichen Authentifizierung erhält der Nutzer eine Übersicht über alle Stationen die entweder momentan in Betrieb sind oder gegebenenfalls nicht im Betrieb sind. Es sollte zusätzlich die Möglichkeit bestehen, alle aktuellsten Sensorwerte eines einzelnen Sensorknoten anzusehen. Mit Hilfe einer Grafik sollten die Sensordaten über einen Zeitraum anschaubar sein. Der Zeitraum sollte vom Nutzer festgelegt werden können.
