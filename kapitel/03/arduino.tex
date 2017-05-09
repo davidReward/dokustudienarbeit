@@ -93,12 +93,27 @@ In beiden Arduinos ist der ATmega328 verbaut dieser ist aus der Produktfamilie d
 \end{itemize}
 Die beiden Boards unterscheiden sich vor allem in der Größe und zusätzlichen Ausstattung.  Der Arduino Nano hat eine Größe von $18$ x $45 mm$, wohingegen der Arduino Pro Mini nur eine Größe von $18$ x $33 mm$ besitzt.
 
-Hinsichtlich der Ausstattung unterscheiden sich die zwei Modell  sehr deutlich. Der Arduino Nano besitzt einen Mini USB Anschluss, dieser kann zu einem zur Stromversorgung genutzt werden, zum anderen kann der Arduino Nano über den USB Anschluss programmiert werden. Der Arduino Pro Mini hat hingegen keine USB Anschluss. Um den Pro Mini zu programmieren wird ein USB-RS232-Interface-Chips benötigt. Mit diesem ist es möglich eine serielle Schnittstelle über USB verfügbar zu machen. Eines der bekanntesten Programmern ist von der schottischen Firma Future Technology Devices International (FTDI). Der Arduino Nano besitzt im Gegensatzt zum Pro Mini bereits auf dem Board einen 5V zu 3,3V Wandler. 
-
-Zusammenfassend kann gesagt werden, dass der Arduino Pro Mini eine reduzierte Version des Arduino Nano’s ist.  
+Hinsichtlich der Ausstattung unterscheiden sich die zwei Modell  sehr deutlich. Der Arduino Nano besitzt einen Mini USB Anschluss, dieser kann zu einem zur Stromversorgung genutzt werden, zum anderen kann der Arduino Nano über den USB Anschluss programmiert werden. Der Arduino Pro Mini hat hingegen keine USB Anschluss. Um den Pro Mini zu programmieren wird ein USB-RS232-Interface-Chips benötigt. Mit diesem ist es möglich eine serielle Schnittstelle über USB verfügbar zu machen. Eines der bekanntesten Programmern ist von der schottischen Firma Future Technology Devices International (FTDI). Der Arduino Nano besitzt im Gegensatz zum Pro Mini bereits auf dem Board einen 5V zu 3,3 V Wandler. Zusammenfassend kann gesagt werden, dass der Arduino Pro Mini eine reduzierte Version des Arduino Nano’s ist.  
 
 
 \subsection{Software}
 Dieses Unterkapitel betrachtet die Softwareumgebung auf dem Arduino, sowie die genutzte Entwicklungsumgebung.
-\paragraph{C++}
-\paragraph{Arduino IDE}
+\paragraph{C/C++} Das Arduino Board kann mit Hilfe von C oder C++ Programmiert werden oder mit einer reduzierten Version von C der sogenanten „Arduin Programming Language“. Diese enthält die Grundoperatoren, Variablen und Funktionen.  Zur Kompilation des  Programmcodes wird  der GNU avr-gcc Compiler verwendet. 
+
+C und C++ werden vor allem für eine effiziente und maschinennaher Programmierung eingesetzt.  C++, sowie C bestehen nur aus sehr wenigen Schlüsselwörtern, können jedoch mit Bibliotheken erweitert werden. Bei C++ handelt es sich um eine Erweiterung von dem C Standard von 1990. C++ bietet gegenüber von C mehr Datentypen, Ausnahmebehandlung, das Überladen von Operationen und weitere Funktionen wie zum Beispiel virtuelle Funktionen. 
+
+\paragraph{Arduino IDE} Die ebenfalls von Arduino erhältliche IDE ermöglicht das einfache Schreiben von Code und das Uploaden auf die Arduino Boars. Die Arduino IDE ist Open-Source und für Windows Mac OS X und für Linux erhältlich. Während der Studienarbeit wurde die Version 1.8.2 eingesetzt. Die Entwicklungsumgebung bietet dabei viele Features.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{bilder/arduinoIDE.png}
+	\caption{Arduino IDE  1.8.1}
+	\label{img:ArduinoIDE}
+\end{figure}
+
+\begin{itemize}
+	\item Kompilieren und Hochladen des Programmcodes auf den Arduino
+	\item Einbinden von externen Bibliotheken
+	\item Übersichtliches Bedienkonzept
+	\item Serieller Monitor zur Ausgabe von Daten des Arduinos
+\end{itemize}
+Die Arduino IDE zeichnet sich vor allem durch seine Einfachheit aus, dies ermöglicht einen schnellen Einstieg in die Programmierung des Arduinos(siehe Grafik \ref{img:ArduinoIDE}). 
