@@ -24,12 +24,15 @@ TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
 
 \subsection{Receiver}
 \textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
-Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit.  
-Das Parsen des empfangenen Bitstroms in einen C-Struct war in Python ohne weiteres nun nicht mehr möglich. 
-Die in \ref{sec:anbindung_raspi_arduino} erwähnte 
+Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit. 
 
+HIER beschreibung es Receivers
+ 
 
 \subsection{Kodierung}
+Das Parsen des empfangenen Bitstroms in einen C-Struct war in Python weiteres nicht mehr möglich. 
+Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
+Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
 \subsection{Hashing}
 -Code
 \subsection{Datenbankanbindung}
