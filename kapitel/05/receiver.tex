@@ -26,7 +26,8 @@ TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
 \textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
 Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit. 
 
-%\lstset{language=python, numbers=left}
+Zu Beginn erfolgt eine Initialisierung:
+\lstset{language=python, numbers=left}
 \begin{lstlisting}
 radio.begin()
 radio.payloadSize = 28
@@ -37,15 +38,71 @@ radio.setPALevel(RF24_PA_MAX)
 radio.setChannel(90)
 radio.setRetries(15, 15)
 \end{lstlisting}
- 
+Der Aufruf in Zeile 2 legt fest, wie viel Bytes die eintreffenden Nachrichten haben. Zeile 4 sorgt dafür, dass der Raspberry dem Sender den erfolgreichen Empfang sofort automatisch bestätigt. Ferner kann man auch die Datenrate anpassen (Zeile 5) und auch die auch die Empfangs-/Sendeleistung des RF24-Moduls. Im Falle des Raspberry Pis ist die Leitung auf maximal gesetzt. Da er an das Stromnetz angeschlossen ist, ist die Leitungsaufnahme weniger relevant. Das Funkmodul verfügt über 126 Kanäle. Jeder Kanal hat eine Breite von einem Megaherz. Der Kanal ist wählbar über die Funkion \textit{setChannel(CHANNEL)} in Zeile 7. Außerdem kann man definieren, wie oft das Modul versuchen soll, zu senden bevor es eine Bestätigung (Ack) erhält.
+
+Der eigentliche Empfang der Daten erfolgt über den simplen Funktionsaufruf:
+\lstset{language=python, numbers=none}
+\begin{lstlisting}
+receive_payload = readRadio()
+\end{lstlisting}
+
+
+
+TODO Quelle: \url{https://www.sparkfun.com/datasheets/Components/SMD/nRF24L01Pluss_Preliminary_Product_Specification_v1_0.pdf}   
 
 \subsection{Kodierung}
 Das Parsen des empfangenen Bitstroms in einen C-Struct war in Python weiteres nicht mehr möglich. 
 Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
 Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
+
+\lstset{language=python, numbers=none}
+\begin{lstlisting}
+decodedData = base64.b64decode(receive_payload)
+\end{lstlisting}
+Es kommt Base64 zum Einsatz. Die Kodierung erfordert zwar auf Seite der Arduinos Rechenzeit, die gesendeten Nachrichten sind dadurch jedoch eindeutig zu dekodieren. 
+
+Nach der Dekodierung kann das Programm mit Hilfe des \textit{struct}-Moduls den C-Struct rekonstruieren:  
+\lstset{language=python, numbers=none, breaklines=true}
+\begin{lstlisting}
+destinationAddr, originAddr, lastHopAddr, messageID, stationID, value, unit, timeID = unpack('<hhhhhfhL', decodedData)
+\end{lstlisting}
+Die deklarierten Variablen erhalten den dementsprechenden Rückgabewert der Funktion \textit{unpack}. Als erstes Argument nimmt sie die Byte order. In diesem Fall ist sie \textit{little-endian}. Anschließend folgen die Datentypen. \textit{h} steht für Short, wobei es sich auf dem Arduino um einen Integer handelt (auf einem x86 würde es sich um einen Short handeln). \textit{f} steht für Float, eine Fließkommazahl und \textit{L} für einen usigned Long, einen long Integer ohne Vorzeichen. 
+
+Quelle TODO \url{https://docs.python.org/2.7/library/struct.html?highlight=struct#module-struct}
+
+
+
 \subsection{Hashing}
--Code
+Um später einen eindeutigen Schlüssel für die Datenbank zu haben, nutzt das Programm mehre Attribute. Eine Kombination aus der ID des Arduinos, der Nachrichten-ID und dem hochgezählten Zeitstempel (der Arduino hat keine Echtzeituhr) ist eindeutig, solange keiner dieser Variablen überläuft. Ein Überlauf sollte in ausreichend großer Zukunft liegen. 
+
+\lstset{language=python, numbers=none, breaklines=true}
+\begin{lstlisting}
+def genearteID_hashed(stationID, messageID, timeID):
+    str1 = str(stationID)
+    str2 = str(messageID)
+    str3 = str(timeID)
+    toHash = str1 + str2 + str3
+    hashed = hashlib.md5()
+    hashed.update(toHash)
+return hashed.hexdigest()
+\end{lstlisting}
+Es kommt ein MD5-Hash zum Einsatz. Dabei handelt es sich um einen 128 Bit langen Hash. 
+
+
 \subsection{Datenbankanbindung}
--Code
+Das Programm schreibt die empfangenen Daten auch in die Datenbank. Abgesehen von dem Exception-Handling sieht das wie folgt aus: 
+
+\lstset{language=python, numbers=left, breaklines=true}
+\begin{lstlisting}
+def writeToDatabase(ID_hashed, originAddr, value, unit):
+    timeStamp = int(time.time())
+    queryCurs.execute('''INSERT IGNORE INTO messwerte (id,originAddr,value,unit,timestamp)
+	VALUES (%s,%s,%s,%s,%s)''', (ID_hashed, originAddr, value, unit, timeStamp))
+	DBconn.commit()
+\end{lstlisting}
+Das \textit{IGNORE} in Zeile 3 erspart eine Prüfung, ob die Nachricht bereits verarbeitet ist. Ist die Nachricht in der Datenbank vorhanden, so passiert nichts weiter. Die Datenbank bricht stillschweigend die Transaktion ab. Das entfallen der Prüfung erspart Rechenzeit. Skaliert das gesamte System vertikal (mehr Sensorknoten) , so könnte es andernfalls hier zu Engpässen kommen.   
+
 \subsection{Scheduling}
 -SystemD job
+\subsection{Logging}
+Neben dem Systemd loggt auch das Receiverprogramm. Die Logfile trägt den Namen receiver.log. Das Programm legt sie in dem gleichen Verzeichnis in dem es läuft an. Alle auftretenden Exceptions die nicht zum Programmabsturz führen sollen, finden sich darin wieder.
