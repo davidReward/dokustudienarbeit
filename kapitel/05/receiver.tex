@@ -1,8 +1,34 @@
 \section{Raspberry Pi}
+Dieses Kapitel beinhaltet die Realisierungen, die den Raspberry Pi betreffen.
 \subsection{Verkabelung}
--logisch
+Wie eingangs bereits erwähnt, nutzt der Raspberry RF24-Chip. Der Modul existiert in mehreren Ausführungen. Für den Raspberry Pi kommt ein Modul mit externem Antennenanschluss zu Einsatz. Dieses Modul verfügt dank der externen Antenne über eine größere Reichweite. Es hat jedoch auch einen höheren Energiebedarf und die Bauform ist nicht so kompakt wie die Ausführung ohne externe Antenne. Diese zwei Nachteile kommen im vorliegenden Fall beim Raspberry Pi jedoch nicht zum tragen.  
+
+\paragraph{Belegung der GPIO-Pins}
+Die Belegung der GPIO-Pins kann man dem Handbuch der RF24-Bibliothek entnehmen:
+
+\begin{table}
+    \begin{tabular}{ll|ll}
+    \#Pin RF24 & Name auf RF24 & \#Pin Raspberry & Name auf Raspberry \\ \hline
+    1                   & GND           & 6                        & GND                \\
+    2                   & VCC           & 1                        &  3,3 Volt          \\
+    3                   & CE            & 31                       & GPIO22             \\
+    4                   & CSN           & 3                        & GPIO8              \\
+    5                   & SCK           & 23                       & SCKL(GPIO14)       \\
+    6                   & MOSI          & 19                       & MOSI(GPIO12)       \\
+    7                   & MISO          & 21                       & MISO(GPIO13)       \\
+    8                   & IRQ           & ~                        & ~                  \\
+    \end{tabular}
+\end{table}
+
+TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
+
 \subsection{Receiver}
--Code
+\textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
+Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit.  
+Das Parsen des empfangenen Bitstroms in einen C-Struct war in Python ohne weiteres nun nicht mehr möglich. 
+Die in \ref{sec:anbindung_raspi_arduino} erwähnte 
+
+
 \subsection{Kodierung}
 \subsection{Hashing}
 -Code
