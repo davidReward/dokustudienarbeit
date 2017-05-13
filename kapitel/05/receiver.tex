@@ -26,7 +26,17 @@ TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
 \textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
 Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit. 
 
-HIER beschreibung es Receivers
+%\lstset{language=python, numbers=left}
+\begin{lstlisting}
+radio.begin()
+radio.payloadSize = 28
+radio.enableDynamicPayloads()
+radio.setAutoAck(1)
+radio.setDataRate(RF24_250KBPS)
+radio.setPALevel(RF24_PA_MAX)
+radio.setChannel(90)
+radio.setRetries(15, 15)
+\end{lstlisting}
  
 
 \subsection{Kodierung}
