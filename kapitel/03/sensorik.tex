@@ -36,7 +36,7 @@ Elementare Sensoren sind man einfachsten aufgebaut. Im Falle eines optischen Sen
 Ein Integrierter Sensor ist da schon komplexer. Er bereitet sein Signal auf. Das kann beispielsweise eine Verstärkung oder eine Filterung sein. Bei einem Intelligenten Sensor redet man schon von einem Rechner. Es kann sich zum Beispiel um eine Kamera oder um einen Laserscanner handeln. Derartige Sensoren arbeiten mit einer umfassenden Vorverarbeitung der Daten. 
 Ferner unterscheidet man zwischen internen und externen Sensoren. Im weiteren betrachten wir die externen Sensoren. Sie sind in der IoT-Welt von hoher Bedeutung.
 %TODO Quelle Strand
-\subsubsection{Temperatursensoren}
+\subsection{Temperatur}
 \begin{figure}
 \includegraphics[scale=1]{bilder/pt100} 
 \caption{PT100 Temperatursensor Quelle TODO https://www.mikrocontroller.net/articles/Temperatursensor }
@@ -50,15 +50,63 @@ Die Temperatur lässt sich auf viel Art und Weisen berechnen. Sensoren für Mikr
 Ein gängiger analoger Temperatursensor ist der \textit{PT100}. Es handelt sich hierbei um einen Platinwiderstand. Er hat bei null Grad Celsius einen Widerstand von 100 Ohm. Der Widerstand nimmt ungefähr 0,4 Ohm pro einem Grad Temperaturänderung zu. Ein Vorteil dieses Sensors ist es, dass er einen großen Messbereich hat. Generell benötigt man für derartige Temperatursensoren eine relativ komplexe Schaltung. Außerdem kann kann man mit dem Sensor einen relativ großen Temperaturbereich abdecken.
 
 https://www.mikrocontroller.net/articles/Temperatursensor
-\section{Luftfeuchtigkeit}
+\subsection{Luftfeuchtigkeit}
+\label{sec:Luftfeute}
+Luftfeutigkeitssensoren messen meist die relative Luftfeuchte. Dazu benutzen moderne Messeinrichtgen entweder;
+\begin{itemize}
+\item kapazitive oder 
+\item widerstandsbasierte Verfahren.
+\end{itemize}
+Bei der kapazitiven Messung ist ein Kondensator vorhanden.  Die Dielektrizitätskonstante ändert sich in Abhängigkeit von der Luftfeuchte. Damit ändert sich auch die Kapazität des Kondensators. Über eine Messung der Kapazität kann man auf die Luftfeuchte schließen.
+Bei einem anderen Verfahren nutzt man Materialien deren Leitfähigkeit abhängig von der Luftfeuchte ist. Mit einer Widerstandsmessung kann man dann auf die Luftfeuchte schließen.
+
+%TODO 
+Quelle: http://www.all-electronics.de/messung-der-relativen-luftfeuchtigkeit/
+
+
+\subsection{Beleuchtungsstärke}
+Zur Helligkeitsmessung kann man entweder Photowiderstände oder Photohalbleiter verwenden. 
+Der ohmsche Widerstand eines Photowiderstandes ist abhängig vom einfallenden Licht. Über eine Widerstandsmessung kann man dann über auf die Helligkeit schließen. 
+Photohalbleiter induzieren bei einfallendem Licht eine Spannung.
+
+\begin{figure}
+\includegraphics[scale=0.1]{bilder/Fotoelektrischer_Effekt} 
+\caption{Photoelektrischer Effekt Quelle: \url{https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Fotoelektrischer_Effekt.svg/2000px-Fotoelektrischer_Effekt.svg.png}}
+\label{Bewegungsmelder}
+\end{figure}
+
+Einfallende Photonen regen Elektronen in der Photozelle an. Die Bewegung der Elektronen kann man als Spannung messen.
+
+\url{https://www.mikrocontroller.net/articles/Lichtsensor_/_Helligkeitssensor}
+
+\subsection{Bewegungsmelder}
+\begin{figure}
+\includegraphics[scale=0.4]{bilder/bewegungsmelder} 
+\caption{Schaltplan eines IR-Bewegungsmelders Quelle: \url{https://www.didaktik.physik.uni-muenchen.de/materialien/sensorik/temp_infrarot/bewegungsmelder/pid_info1.pdf}}
+\label{Bewegungsmelder}
+\end{figure}
+Bewegungsmelder können mit Infrarotstrahlung arbeiten. Sie messen die Infrarotstrahlung und geben zurück, sobald sich diese ändert. 
+Die Sensoren nutzen dazu den pyroelektrischen Effekt. In Bewegungsmelder kommen zwei dieser Sensoren zum Einsatz.   
 
 
 
-Temperatur
-Luftfeuchtigkeit
-Beleuchtungsstärke
-Luftdruck
-Bewegungsmelder
-Bodenfeuchtete
+Ein pyroelektrischer Sensor kann man nun direkt in einen Raum richten, beispielsweise mithilfe einer Linse. Verdeckt ein Objekt den einen Sensor, löschen sich nun die Spannungen der pyroelektrischen Bauteuile nicht mehr aus. Der Bewegungsmelder gibt zurück, dass er eine Bewegung erkannt hat. 
+
+%https://www.didaktik.physik.uni-muenchen.de/materialien/sensorik/temp_infrarot/bewegungsmelder/pid_info1.pdf
+
+\subsection{Luftdruck}
+Den atmosphärischen Luftdruck kann man mit Absolutdrucksensoren messen. Die Messerichtungen haben ein Vakuum. Das Vakuum trennt man mit einer Membran von der Umgebung. Ändert sich nun der Umgebungsdruck, so bewegt sich die Membran. Die Bewegung nutzt man, um mit Piezokristallen eine Spannung zu messen. Die Spannung ist bei größeren Bewegungen und somit größeren Änderungen des Luftdrucks auch größer.
+
+\begin{figure}
+\includegraphics[scale=0.5]{bilder/drucksensor} 
+\caption{Drucksensor Quelle: \url{https://www.first-sensor.com/de/produkte/drucksensoren/drucksensoren-und-transmitter/druckarten.html}}
+\label{Drucksensor}
+\end{figure}
+
+\url{https://www.first-sensor.com/de/produkte/drucksensoren/drucksensoren-und-transmitter/druckarten.html}
+
+\subsection{Bodenfeuchte}
+Die Messung der Bodenfeuchte kann dem gleichen Prinzip wie die Messung der Luftfeuchte folgen (Kapitel \ref{sec:Luftfeute}). 
+
 
  
