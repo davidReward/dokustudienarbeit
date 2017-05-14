@@ -1,2 +1,70 @@
-\section{Webservice (mit Flask)}
--Routen von Webservice
+\section{Webservice}
+Um von der Clientseitig für die Datenrepräsentation die Messdaten zu erhalten, kommt ein Webservice zum Einsatz. Der Webservice ist wie in Kapitel \ref{Topologie} TODO label erwähnt in Python implementiert. Das Microframework \textit{Flask} kam zum Einsatz. Es ermöglicht eine einfache und effektive Implementierung des Webservices. Der Webservice gibt die angefragten Ressourcen im JSON-Format zurück. 
+
+\paragraph{Routen}
+Der Webservice verfügt über folgende Routen: 
+\begin{enumerate}
+\item /mdata/station
+\item /mdata/station/$<$int:station$>$
+\item /mdata/station/$<$int:station$>$/$<$int:unit$>$
+\item /mdata/$<$string:mdatum\_id$>$
+\end{enumerate} 
+Frägt man auf der ersten Route an, so erhält man eine Liste mit allen in der Datenbank enthaltenen Stationen, zum Beispiel:
+\lstset{language=c, numbers=none, breaklines=true}
+\begin{lstlisting}
+"location": "Wohnzimmer", 
+"name": "Station100", 
+"originAddr": 100, 
+"powerSaving": 0
+\end{lstlisting}
+Mit Hilfe der zweiten Route kann man alle Messdaten einer Station abrufen. Hier ein Ausschnitt:
+\lstset{language=c, numbers=none, breaklines=true}
+\begin{lstlisting}
+"originAddr": 400, 
+"sensor": "Luftdruck", 
+"timestamp": 1494414190, 
+"unit": 4, 
+"unit_name": "hPa", 
+"uri": "http://193.196.7.13:8080/mdata/f7bc3361937ee46c33de8aff35196572", 
+"value": 993.0
+\end{lstlisting}
+Über die URI ist die Ressource direkt adressierbar. Dazu kann man die vierte oben genannte Route nutzen, wobei der String \textit{mdatum} der URI entspricht.Die URI ist in der Datenbank die ID. Sie ist auch der Primärschlüssel. Die Erzeugung dieser ID erfolgt wie in \ref{sec:hashing} beschrieben. 
+Die dritte Route kann man nutzen um eine Messdaten einer Größe für einen definierten Zeitraum zu erhalten:
+\lstset{language=python, numbers=left, breaklines=true}
+\begin{lstlisting}
+@app.route('/mdata/station/<int:station>/<int:unit>', methods=['GET'])
+@auth.login_required
+def get_mdataUnit(station, unit):
+    begin = request.args.get('begin')
+    end = request.args.get('end')
+    anzahlDatenpunkte =  request.args.get('anzahl')
+
+    if begin is not None and end is not None:
+        query_result = queryDB_station_interval(station, unit, begin, end)
+        query_result =  minimizeData(query_result)
+        if len(query_result) != 0:
+            return jsonify({'Messdaten':  [make_public_mdatum(data) for data in query_result]})
+
+abort(404)
+\end{lstlisting} 
+Die Methode nutzt POST-Parameter. In diesem Fall sind die POST-Parameter nicht optional, Zeile 8 prüft, ob sie gegeben sind. Sind sie gegeben und die Abfrage aus der Datenbank ist nicht leer, so springt Zeile 12 aus der Methode raus, ansonsten wirft Zeile 14 den 404 HTTP-Fehler (not found). 
+
+\paragraph{Virtuelle Umgebung}
+Um das oben beschriebene Pythonprogramm sicher auf dem Webserver nginx zu veröffentlichen bedarf es im Idealfall einer virtuellen Pythonumgebung. Diese garantiert unter anderem, dass der User \textit{www-data} (er führt den Webserver aus) nicht unnötig viele Berechtigungen benötigt. Ferner kann die virtuelle Umgebung alle Abhängigkeiten beinhalten. Das Hostsystem muss neben der Installation von Python (ist bei Linux im Regelfall vorinstalliert) keine weiteren Voraussetzungen erfüllen. Im Rahmen dieser Arbeit kommt \textit{virtualenv} zum Einsatz. Mithilfe des Tools \textit{pip} kann man Python-Module (Bibliotheken) in dieser virtuellen Umgebung installieren. Die virtuelle Umgebung enthält auch eine Python-Binary. Ein    
+
+\paragraph{Veröffentlichung auf Webserver}
+Um dem Webserver nginx zu ermöglichen, ein Pythonprogramme auszuführen benötigt er einen Applikationsserver. \textit{uWSGI} ist einer dieser Server. Um die Pythonapplikation ausführen zu können ist er unter anderem wie folgt konfiguriert:
+\lstset{language=bash, numbers=left, breaklines=true}
+\begin{lstlisting}
+[uwsgi]
+#application's base folder
+base = /var/www/restAPI
+
+#python module to import
+app = getData_web
+module = %(app)
+
+home = %(base)/venv
+pythonpath = %(base)
+\end{lstlisting}
+Zeile 3 definiert das Wurzelverzeichnis des Servers. In Zeile 6 gibt man den Namen der Pythonanwendung bekannt. In Zeile 9 kann man nun die den Pfad nur Python-Binary angeben. Da es sich hier wie oben beschrieben um eine virtuelle Pythonumgebung handelt, ist der Pfad zur Binary \%(base)/venv.

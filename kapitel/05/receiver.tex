@@ -1,6 +1,7 @@
 \section{Raspberry Pi}
 Dieses Kapitel beinhaltet die Realisierungen, die den Raspberry Pi betreffen.
 \subsection{Verkabelung}
+\label{sec:verkabelung_raspi}
 Wie eingangs bereits erwähnt, nutzt der Raspberry RF24-Chip. Der Modul existiert in mehreren Ausführungen. Für den Raspberry Pi kommt ein Modul mit externem Antennenanschluss zu Einsatz. Dieses Modul verfügt dank der externen Antenne über eine größere Reichweite. Es hat jedoch auch einen höheren Energiebedarf und die Bauform ist nicht so kompakt wie die Ausführung ohne externe Antenne. Diese zwei Nachteile kommen im vorliegenden Fall beim Raspberry Pi jedoch nicht zum tragen.  
 
 \paragraph{Belegung der GPIO-Pins}
@@ -23,6 +24,7 @@ Die Belegung der GPIO-Pins kann man dem Handbuch der RF24-Bibliothek entnehmen:
 TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
 
 \subsection{Receiver}
+\label{sec:receiver}
 \textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
 Da sich die Installation weiterer Bibliotheken für den Raspberry Pi in C als sehr umständlich erwies, entwickelte man einen Receiver in Python. Die Bibliothek stellt hierfür auch Funktionen bereit. 
 
@@ -51,6 +53,7 @@ receive_payload = readRadio()
 TODO Quelle: \url{https://www.sparkfun.com/datasheets/Components/SMD/nRF24L01Pluss_Preliminary_Product_Specification_v1_0.pdf}   
 
 \subsection{Kodierung}
+\label{sec:kodierung}
 Das Parsen des empfangenen Bitstroms in einen C-Struct war in Python weiteres nicht mehr möglich. 
 Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
 Eine der in \ref{sec:anbindung_raspi_arduino} erwähnten Möglichkeiten der Kodierung ist das Erstellen eins Strings und dessen Versand auf dem Arduino. Ein Problem hierbei ist jedoch, das man beachten muss, dass die Länge des Strings variieren kann. Man muss nach der Konkatenation des Strings sicherstellen, dass der String die erwartete Länge hat. Ansonsten kann es zu Problemen bei der Dekodierung beziehungsweise beim Parsen der Daten kommen. Diese Gründe sowie die schlechte Erweiterbarkeit motivierten die Kodierung explizit zu realisieren. 
@@ -73,6 +76,7 @@ Quelle TODO \url{https://docs.python.org/2.7/library/struct.html?highlight=struc
 
 
 \subsection{Hashing}
+\label{sec:hashing}
 Um später einen eindeutigen Schlüssel für die Datenbank zu haben, nutzt das Programm mehre Attribute. Eine Kombination aus der ID des Arduinos, der Nachrichten-ID und dem hochgezählten Zeitstempel (der Arduino hat keine Echtzeituhr) ist eindeutig, solange keiner dieser Variablen überläuft. Ein Überlauf sollte in ausreichend großer Zukunft liegen. 
 
 \lstset{language=python, numbers=none, breaklines=true}
@@ -90,6 +94,7 @@ Es kommt ein MD5-Hash zum Einsatz. Dabei handelt es sich um einen 128 Bit langen
 
 
 \subsection{Datenbankanbindung}
+\label{sec:db_verbindung}
 Das Programm schreibt die empfangenen Daten auch in die Datenbank. Abgesehen von dem Exception-Handling sieht das wie folgt aus: 
 
 \lstset{language=python, numbers=left, breaklines=true}
@@ -103,6 +108,25 @@ def writeToDatabase(ID_hashed, originAddr, value, unit):
 Das \textit{IGNORE} in Zeile 3 erspart eine Prüfung, ob die Nachricht bereits verarbeitet ist. Ist die Nachricht in der Datenbank vorhanden, so passiert nichts weiter. Die Datenbank bricht stillschweigend die Transaktion ab. Das entfallen der Prüfung erspart Rechenzeit. Skaliert das gesamte System vertikal (mehr Sensorknoten) , so könnte es andernfalls hier zu Engpässen kommen.   
 
 \subsection{Scheduling}
--SystemD job
+\label{sec:scheduling}
+Das Receiverprogramm startet automatisch wenn der Raspberry Pi bootet. Außerdem sollte der Receiver den Betrieb automatisch wieder aufnehmen nachdem er ungewollter Weise beendet wurde. 
+Um das zu realisieren, nutzt man Systemd. Systemd ist ein Initialisierungssytem von Linux. Es ist das erste Programm das beim Boot startet und lädt weitere Programme nach. In diesem Fall auch den Receiver (receiverMesh.py)
+\lstset{language=bash, numbers=left, breaklines=true}
+\begin{lstlisting}
+[Unit]
+Description=Receiver
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/sensorknoten/receiverMesh.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+\end{lstlisting}
+Um einen automatischen Start nach einem Fehler zu gewährleisten bedarf es Zeile 8. Systemd loggt derartige Fälle. So kann man Fehler identifizieren und beheben.
+
 \subsection{Logging}
-Neben dem Systemd loggt auch das Receiverprogramm. Die Logfile trägt den Namen receiver.log. Das Programm legt sie in dem gleichen Verzeichnis in dem es läuft an. Alle auftretenden Exceptions die nicht zum Programmabsturz führen sollen, finden sich darin wieder.
+\label{sec:logging}
+Neben Systemd loggt auch das Receiverprogramm. Die Logfile trägt den Namen receiver.log. Das Programm legt sie in dem gleichen Verzeichnis in dem es läuft an. Alle auftretenden Exceptions die nicht zum Programmabsturz führen sollen, finden sich darin wieder.
