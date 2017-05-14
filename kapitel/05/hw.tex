@@ -42,5 +42,43 @@ In diesem Unterkapitel wird auf den gesamten Produktionsprozess eingegangen. Beg
 
 \paragraph{Erstellung eines Schaltplans} Nachdem ein funktionsfähiger Prototyp entworfen wurde, konnte ein Schaltplan für den energiesparenden Sensorknoten und den normalen Sensorknoten entwickelt werden. Die Schaltpläne beider Sensorknoten sind im Anhang zu finden. Der Schaltplan wurde komplett entworfen ohne alle Bauteile getestet zu haben. Zusätzlich wurde nur für den normalen Sensorknoten ein Prototypen entworfen, da zum Zeitpunkt der Erstellung des Prototyen die Arduino Pro Mini nicht vorlagen. Der Schaltplan wurde mit Hilfe von Eagle (siehe Kapitel \ref{sec:MesswerterfassungArduino} erstellt.
 \paragraph{Erstellung eines Layouts} Eagle bietet die Möglichkeit, nach der Erstellung eines Schaltplans ein Layout für diesen Schaltplan zu entwickeln. Zunächst muss die Größe der Platine festgelegt werden, diese ist bei den Sensorknoten 70 mm * 69 mm. Im nächsten Schritt werden alle Bauteile auf der Platine platziert und positioniert. Nachdem die Bauteile so positioniert worden sind, dass genügend Platz zwischen den Bauteilen ist. Können die Leiterbahnen Routen, mit Hilfe des Autorouters auf der Leiterplatte verlegt werden. Die Leiterbahnen werden nach bereits vorher angegeben Anforderungen (zum Beispiel Abstand und Breite Leiterbahnen) verlegt. Im letzten Schritt wird die Platine noch beschriftet und Bohrlöcher in den Ecken hinzugefügt. So besteht auch die Möglichkeit die Platinen in einem Gehäuse zu befestigen. 
-\paragraph{Bestellprozess} Da das Erstellen der Platinen Zeitaufwendig wäre haben wir uns entschieden die Platinen produzieren zu lassen. Nach einem kurzen Vergleich verschiedener Hersteller, 
-\paragraph{Bestückung de Platinen}
+\paragraph{Bestellprozess} Da das Erstellen der Platinen Zeitaufwendig wäre haben wir uns entschieden die Platinen produzieren zu lassen. Nach einem kurzen Vergleich verschiedener Hersteller, kamen wir zum Schluss das eine Bestellung bei einem chinesischen Hersteller die günstigste Variante ist. Der Hersteller war um den Faktor 10 billiger. Wir haben uns für die Webseite \textit{https://www.seeedstudio.com} entschieden. 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{bilder/gerberViewer.png}
+	\caption{Gerber-Viewer – Seeedstudio.com}
+	\label{img:GerberViewer}
+\end{figure}
+
+Zunächst musste ein das erstellte Layout in das Gerber-Format exportiert werden. Das Gerber Format enthält alle wichtigen Informationen, die zur Produktion der Platine benötigt werden. Es handelt sich bei diesem Format um ein Art Quasi-Standard. Die Gerber Dateien müssen anschließend gezippt werden und können auf die Webseite hochgeladen werden. Die Webeseite bietet ein Gerber-Viewer um die Leiterplatte nach dem hochladen noch einmal auf die Korrektheit zur Überprüfen (siehe Bild \ref{img:GerberViewer}). Dieser Schritt war enorm Hilfreich, da so festgestellt werden konnte das die Beschriftungen nicht richtig skaliert wurden und Sonderzeichen nicht dargestellt wurden. Eine Abhilfe konnte durch eine Umwandlung der Schriften in eine Vektorgrafik erlangt werden. 
+
+Nachdem die Dateien im Gerber-Format hochgeladen wurde mussten noch einige Angaben zur Platine selbst gemacht werden, diese Angaben waren für beide Platinen die gleichen mit einer Ausnahme:
+\begin{itemize}
+	\item Material: FR-4 $\rightarrow$ Verbundwerkstoff aus Epozidharz und Glasfasergewebe
+	\item Anzahl Schichten: 2
+	\item Größe der Platine: 70 mm x 69 mm
+	\item Anzahl an Platinen: 10 Stück
+	\item Dicke der Platine: 1,6 mm
+	\item Farbe der Platine: Weiß (normaler Sensorknoten), Blau (energiesparender Sensorknoten) 
+	\item Oberflächenbehandlung: HASL (Hot Air Solder Leveling mit Zinn/Blei)
+	\item Mindestabstand zwischen zwei Leiterbahnen: 0,4 mm
+	\item Gewicht der Kupferbahnen: $1 oz/ft^2$  entspricht $300 g/m^2$
+	\item Mindestgröße von Bohrlöchern: 0,3 mm
+\end{itemize}
+Nachdem die Eigenschaften alle festgelegt wurden der Bestellvorgang fortgesetzt. Im letzten Schritt musste noch die Versandmethode gewählt werden. Wir entschieden uns für die günstigste, die jedoch auch die längste Versanddauer hatte. Der Endbetrag errechnete sich dann aus 10,90 Euro Versandkosten und zweimal 4,51 Euro für die Platinen.
+
+Die Platinen wurden am 14. November 2016 bestellt, am 22. November 2016 waren die Platinen fertiggestellt und wurden verschickt. Den Versand wurde von Singapore Post und DHL übernommen. Die Ware wurde per Luftfracht verschickt und wurde am 21. Dezember 2016 geliefert. Es gab bei der Zustellung jedoch auch Probleme, da bei dem Bestellvorgang die falsche PLZ angegeben wurde und sich deshalb das Paket um eine Woche verzögerte.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{bilder/platineArduinoNano.jpg}
+	\caption{Platine für normaler Sensorknoten}
+	\label{img:PlatineArduinoNano}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{bilder/platineArduinoProMini.jpg}
+	\caption{Platine für energiesparender Sensorknoten}
+	\label{img:PlatineArduinoProMini}
+\end{figure}
+
+\paragraph{Bestückung de Platinen} Die Platinen entsprachen vollständig dem erwarteten Ergebnisses (siehe Bild \ref{img:PlatineArduinoProMini} und \ref{img:PlatineNano}). Auf die Platinen konnte extrem einfach und schnell die Steckverbindungen, der Schalter, die Widerstände und den DHT22 Sensor aufgebracht werden. Die Produktionszeit einer Platine reduzierte sich so von 3 Stunden auf 10 Minuten. Zusammenfassend kann eine Empfehlung für \textit{Seeedstudio} ausgesprochen werden. Falls das Produkt jedoch kommerziell genutzt werden sollte, darf aufgrund von neuer EU-Richtlinien nur noch bleifreies Lötzinn verwendet werden. 
