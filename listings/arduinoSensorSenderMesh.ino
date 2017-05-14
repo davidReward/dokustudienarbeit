@@ -367,7 +367,7 @@ void getPressure(){
   pressure = event.pressure; 
 }
 void getSoilMoisture(){  
-  soilMoistureAnalog = analogRead(soilMoistureAnalogPin); 
+  soilMoistureAnalog =(100-((100/1023.0)* analogRead(soilMoistureAnalogPin))); 
   soilMoistureDigital = digitalRead(soilMoistureDigitalPin);  
 }
 void getOneWireTemperature(){
