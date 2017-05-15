@@ -1,13 +1,13 @@
 \section{Sensorik}
-Da wie oben beschrieben die Sensorik ein große Rolle im Bereich der IoT spielt, sind in diesem Kapitel die Grundlagen der Sensorik aufgeführt.  
+Da wie oben beschrieben die Sensorik eine große Rolle im Bereich der IoT spielt, sind in diesem Kapitel die Grundlagen der Sensorik aufgeführt.  
 \subsection{Allgemein}
-Der Begriff \textit{Sensorik} kommt aus dem Latein. \textit{Sensus} bedeutet "der Sinn". Generell lässt sich sagen, dass ein Sensor ein System ist, dass eine physikalische Größe und deren Änderung misst und die Messung in nutzbare Signale wandelt. 
+Der Begriff \textit{Sensorik} kommt aus dem Latein. \textit{Sensus} bedeutet "der Sinn". Generell lässt sich sagen, dass ein Sensor ein System ist, das eine physikalische Größe und deren Änderung misst und die Messung in nutzbare Signale wandelt. 
 Regelungen können Sensoren als Messerichtungen nutzen.  
 
 \begin{figure}
 \includegraphics[scale=0.3
 ]{bilder/regelung} 
-\caption{Schema einer Regelung \cite{Strand}}
+\caption[Schema einer Regelung]{Schema einer Regelung \cite{strand}}
 \label{IPv4}
 \end{figure}
 
@@ -39,7 +39,7 @@ Ferner unterscheidet man zwischen internen und externen Sensoren. Im weiteren be
 \subsection{Temperatur}
 \begin{figure}
 \includegraphics[scale=1]{bilder/pt100} 
-\caption{PT100 Temperatursensor \cite{PT100} }
+\caption[PT100 Temperatursensor]{PT100 Temperatursensor \cite{pt100} }
 \label{PT100}
 \end{figure}
 Die Temperatur lässt sich auf viel Art und Weisen berechnen. Sensoren für Mikrocontroller kann man in zwei Kategorien einteilen:
@@ -49,7 +49,8 @@ Die Temperatur lässt sich auf viel Art und Weisen berechnen. Sensoren für Mikr
 \end{itemize}
 Ein gängiger analoger Temperatursensor ist der \textit{PT100}. Es handelt sich hierbei um einen Platinwiderstand. Er hat bei null Grad Celsius einen Widerstand von 100 Ohm. Der Widerstand nimmt ungefähr 0,4 Ohm pro einem Grad Temperaturänderung zu. Ein Vorteil dieses Sensors ist es, dass er einen großen Messbereich hat. Generell benötigt man für derartige Temperatursensoren eine relativ komplexe Schaltung. Außerdem kann kann man mit dem Sensor einen relativ großen Temperaturbereich abdecken.
 
-https://www.mikrocontroller.net/articles/Temperatursensor
+\cite{mc2}
+
 \subsection{Luftfeuchtigkeit}
 \label{sec:Luftfeute}
 Luftfeutigkeitssensoren messen meist die relative Luftfeuchte. Dazu benutzen moderne Messeinrichtgen entweder;

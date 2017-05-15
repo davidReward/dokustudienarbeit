@@ -12,7 +12,7 @@ Der energiesparende Sensorknoten wird dauerhaft mit Batterien betrieben. Dieser 
 \paragraph{Spannungsversorgung} Der Arduino Pro Mini verfügt über kein 5V zu 3,3V Wandler, weshalb zusätzlich noch ein Wandler aufgebracht wurde. Dieser 5V zu 3,3V Wandler ist ebenfalls nur mit Hilfe von Stiftleisten aufgebracht. 
 
 Die Spannungsversorgung des Sensorknoten erfolgt mit 4 x 1,5 AA Batterien. Diese liefern gemeinsam eine Spannung von 6V zu Beginn ihrer Betriebszeit. Der Sensorknoten kann bis ca. 4,2V betrieben werden. Die Spannungszufuhr kann mit Hilfe eines Schalters unterbrochen werden. 
-\paragraph{Aufgetretene Probleme} Bei der Erstellung des Schaltplans ist ein Fehler bei Sensorschnittstellen für den BMP180 und BH1750 entstanden. Beide Sensoren werden über das $I^2C$ Schnittstelle angesprochen. Hierbei kam es zu einer Vertauschung der 3,3V Leitung und der Masse Leitung. Aus diesem Grund können diese beiden Sensoren nur mit einem Adapter bzw. mit flexiblen Steckbrücken betrieben werden. Die Funktion der Schnittstelle ist davon nicht betroffen. 
+\paragraph{Aufgetretene Probleme} \label{sec:hwproblem} Bei der Erstellung des Schaltplans ist ein Fehler bei Sensorschnittstellen für den BMP180 und BH1750 entstanden. Beide Sensoren werden über das $I^2C$ Schnittstelle angesprochen. Hierbei kam es zu einer Vertauschung der 3,3V Leitung und der Masse Leitung. Aus diesem Grund können diese beiden Sensoren nur mit einem Adapter bzw. mit flexiblen Steckbrücken betrieben werden. Die Funktion der Schnittstelle ist davon nicht betroffen. 
 
 Zusätzlich kam es bei der Auswertung der Reed-Kontakte zu zufälligen falschen Werten. Diese konnten behoben werden in dem ein zusätzlicher 10k Ohm Pull Down-Widerstand eingelötet wurde, der das Signal auf Masse zieht.
 
