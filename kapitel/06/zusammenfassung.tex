@@ -1,16 +1,23 @@
 \section{Zusammenfassung}
--C Implementierung--> Python
--Kodierung --> explizit
--Schaltplan --> keine neue wegen lieferzeit --> steckbrücken
-	-im anhang korrekter schaltplan
--SQL gleichzeitiger Zugriff --> nicht möglich
--RF24 Bib --> wechsel bei empfang auf sender --> clearen der register wurde nicht gemacht
-	-> register gecleart 
--Auflösung von Messdaten
--
+Zeitlich gesehen ging das Entwicklungsteam wie folgt vor:
+\begin{itemize}
+\item Verbindung zwischen Raspberry Pi und Arduino herstellen (\ref{sec:anbindung_raspi_arduino})
+\item Bestückung der Arduinos mit den Sensoren auf der eigen designeten Leiterplatine TDOO REF
+\item gleichzeitig die Realisierung der Verarbeitung der Messdaten auf dem Raspberry Pi (\ref{sec:receiver})
+\item Erstellen der Messdatenvisualisierung TODO ref und der Messdatenbereitstellung (\ref{sec:webservice}) 
+\end{itemize}
 
--
+Beim Realisieren des Sensorknotens kam es zu einigen Problemen die zu lösen waren. Dazu gehörten unter anderem:
+\begin{enumerate}
+\item Installation weiterer Bibliotheken auf dem Raspberry Pi
+\item Die Kodierung der Nachrichten zwischen Arduino und Raspberry Pi
+\item Fehlende Widerstände auf der gefertigten Platine
+\item Fehler beim gleichzeitigen Zugriff auf die Datenbank
+\item Fehlverhalten der Funkmodule beim Wechseln zwischen Senden und Empfangen
+\end{enumerate}
 
--Probleme
-
--Alles kurz beschreiben in 0,5 seiten  --> grober Ablauf/Konzept
+Beim ersten Fehler war es notwendig wie in  \ref{sec:receiver} beschrieben in eine andere Programmiersprache zu wechseln (Python). Die Installation von weiteren Bibliotheken konnte man dort mittels eines Tools einfach vollziehen. 
+Um Probleme bei der Kodierung zu eliminieren half es, Nachrichten explizit zu kodieren. Dies geschieht zwar zu Ungunsten der Rechenzeit auf dem Arduino, war jedoch effektiv (\ref{sec:kodierung}). 
+Weitere Probleme traten auf in bei der Fertigung der Platinen. Aufgrund eines Planungsfehlers fehlte ein Widerstand TODO ref. Zur Option stand es, die Platinen erneut mit den korrigierten Schaltplänen (siehe Anhang) erneut zu fertigen oder den Fehlenden Widerstand manuell einzulöten. Aufgrund der relativ langen Lieferzeit entschied man sich dafür, die Widerstände einzulöten.
+Versuchten mehrere Programme gleichzeitig auf die SQLite-Datenbank zuzugreifen, traten Seiteneffekte auf. Abhilfe schaffte hier der Umstieg auf ein mächtigeres Datenbankmanagementsystem (MySQL, siehe \ref{sec:db}).
+In der Bibliothek des RF24-Moduls lauerte ebenfalls ein Fehler. Es war wohl nicht vorgesehen einen Wechseln zwischen Broadcast senden und empfangen zu vollziehen. Die Lösung lag in dem Anpassen der Bibliothek, es ist in TODO ref beschrieben.
