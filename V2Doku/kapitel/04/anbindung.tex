@@ -1,0 +1,42 @@
+\section{Anbindung Pi/Arduino}
+\label{sec:anbindung_raspi_arduino}
+Das RF24-Modul (\ref{sec:m2m}) soll der Kommunikation zwischen Arduino und Raspberry Pi dienen. 
+\paragraph{RF24}
+Ein Grund der über die bisher genannten Gründe hinaus geht ist, dass das RF24 Modul mit dem Raspberry Pi als auch mit dem Arduino kompatibel ist. Es existiert eine Bibliothek die man für den Raspberry Pi und auch für den Arduino nutzen kann: \url{https://github.com/nRF24/RF24}. Diese Bibliothek beinhaltet auch Beispiele, die die Benutzung der Bibliotheksfunktionen veranschaulichen: 
+\lstset{language=c}
+\begin{lstlisting}
+if ( radio.available() ) {
+	// Dump the payloads until we've gotten everything
+	unsigned long got_time;
+	
+	// Fetch the payload, and see if this was the last one.
+	while(radio.available()){
+	radio.read( &got_time, sizeof(unsigned long) );
+	}
+	radio.stopListening();
+				
+	radio.write( &got_time, sizeof(unsigned long) );
+
+	// Now, resume listening so we catch the next packets.
+	radio.startListening();
+\end{lstlisting}
+
+Da auf beiden Plattformen die gleiche Bibliothek nutzbar ist, ist der Code kann der Code für den Raspberry ähnlich dem für den Arduino sein.
+\paragraph{Kodierung}
+Um sicherzustellen, dass der Raspberry Pi die Nachrichten des Arduinos lesen kann, gibt es unter anderem folgende Möglichkeiten:
+\begin{enumerate}
+\item Die Schnittstelle auf dem Raspberry Pi in C implementieren. Der Arduino sendet ein C-Struct. Beim Einlesen des Structs auf dem Raspberry muss man die Größe der Datentypen beachten (Ein Integer auf dem Arduino entspricht einem Short Integer auf dem Raspberry Pi, sie sind jeweils zwei Bytes groß). Der Vorteil ist, das man keine Rechenzeit zum kodieren auf dem Arduino benötigt.
+\item Der Arduino sendet keinen Struct, sondern einen String. Alle Daten die der Arduino sendet, konkateniert man zu einem String. Der Compiler für den Ardunio encodiert Strings mithilfe von ASCII. Der Raspberry Pi muss dann die empfangenen Daten mit ASCII dekodieren. Auch hier benötigt man keine Rechenzeit zum kodieren, jedoch zur Konkatenation.
+\item Explizit kodieren auf dem Arduino und dementsprechend auf dem Raspberry Pi dekodieren. Die benutzte Kodierung ist theoretisch nicht relevant, sie muss lediglich auf beiden Systemen identisch implementiert sein. Dies kostet Rechenzeit, die Kodierung ist jedoch frei wählbar.
+\end{enumerate}
+
+Die dritte Möglichlkeit sähe in Pseudocode auf dem Arduino wie folgt aus (ASCII ist das Kodierungsverfahren):
+\lstset{language=c}
+\begin{lstlisting}
+encode_ASCII('PAYLOAD');
+\end{lstlisting}
+Auf dem Raspberry:
+\lstset{language=c}
+\begin{lstlisting}
+decode_ASCII('PAYLOAD');
+\end{lstlisting}

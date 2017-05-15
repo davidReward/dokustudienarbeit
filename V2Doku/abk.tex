@@ -1,0 +1,72 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       Vorlage für Berichte der DHBW-Karlsruhe, Datei mit Abkürzungen
+%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
+%% $Id: abk.tex,v 1.2 2010/01/21 08:40:03 vollmer Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantomsection %\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+\renewcommand\refname{Abkürzungsverzeichnis} \chapter*{Abkürzungsverzeichnis}
+
+
+%\chapter*{Abkürzungsverzeichnis}                   % chapter*{..} -->   keine Nummer, kein "Kapitel"
+						         % Nicht ins Inhaltsverzeichnis
+%\addcontentsline{toc}{chapter}{Akürzungsverzeichnis}   % Damit das doch ins Inhaltsverzeichnis kommt
+
+% Hier werden die Abkürzungen definiert
+\begin{acronym}[XXXXXXX]	%[XX..] Spaltenabstand in Zeichen vom längsten Acronym
+%
+\setlength{\itemsep}{-\parsep}	%enger Zeilenabstand
+
+% % % % % % % % % % % % % %
+% % Verwendung: \ac{AD} % %
+% % % % % % % % % % % % % %
+
+
+\acro{CSI}{Camera Serial Interface}
+\acro{DSI}{Display Serial Interface}
+\acro{DSP}{Digitaler Signalprozessor}
+\acro{GPIO}{General Purpose Input Output}
+\acro{HATEOAS}{Hypermedia As The Engine Of Application State}
+\acro{HTTP}{Hypertext Transfer Protoco}
+\acro{HTTPS}{HyperText Transfer Protocol Secure}
+\acro{IDE}{Integrated Development Environment}
+\acro{IoT}{Internet of Things}
+\acro{I2C}[I\textsuperscript{2}C]{Inter-Integrated Circuit}
+\acro{JSON}{JavaScript Object Notation}
+\acro{LXDE}{Lightweight X11 Desktop Environment}
+\acro{MMU}{Memory Management Unit}
+\acro{NFC}{Near Field Communication}
+\acro{PCB}{Printed Circuit Board}
+\acro{PIXEL}{Pi Improved Xwindows Environment, Lightweight}
+\acro{REST}{Representational State Transfer}
+\acro{RFID}{radio-frequency identification}
+\acro{RISC}{Reduced Instruction Set Computer}
+\acro{ROA}{Resource-oriented Architecture}
+\acro{SQL}{Structured Query Language}
+\acro{SSL}{Secure Sockets Layer}
+\acro{SPI}{Serial Peripheral Interface Bus}
+\acro{URI}{Uniform Resource Identifier}
+\acro{USART}{Universal synchronous/asynchronous Receiver-Transmitter}
+\acro{WDT}{Watchdog Timer}
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ % \acro{Name}{Darstellung der Abkürzung}{Langform der Abkürzung}
+ %\acro{Abk}[Abk.]{Abkürzung}
+ 
+ %müssen noch am Ende händisch (zu Fuß :-) ) sortiert werden.
+ 
+ 
+
+\end{acronym}
+

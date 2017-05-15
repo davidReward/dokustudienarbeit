@@ -1,0 +1,19 @@
+\section{Energiesparmodus Arduino Pro Mini}
+\label{sec:Energiesparmodus}
+In diesem Unterkapitel wird auf die eingesetzten Techniken und Anpassungen eingegangen. Diese sind notwendig, um einen sehr energiesparenden Sensorknoten zu entwickeln. Der Sensorknoten sollte wie bereits beschrieben nur mit 4x AA-Batterien betrieben werden. Hierfür wurden drei grundlegende Ideen umgesetzt. Diese werden in den folgenden Abschnitten genauer erläutert. 
+\paragraph{Verwendung des Arduino Pro Mini} Der Arduino Pro Mini eignet sich besonders für Projekte bei denen nur wenig Energie verbraucht werden darf. Der Pro Mini verfügt im Gegensatz zum Arduino Nano über keinen USB Anschluss und keinen Spannungswandler von 5V zu 3,3V. Diese beiden Komponenten benötigen zusätzlich Strom. Durch den Verzicht auf diese beiden Komponenten kann ca. 2 - 4mA eingespart werden.
+\paragraph{Entfernen der Status LED} Auf den Arduinos ist eine Status LED aufgebracht. Diese zeigt nur an, ob der Arduino aktiv ist oder nicht. Da diese LED keine weitere Funktion hat kann sie entfernt werden. Das Löten von SMD-LEDs ist extrem schwierig. Aus diesem Grund wird nicht die LED selbst ausgelötet, sondern der verbaute Vorwiderstand. So kann gegebenenfalls die LED einfacher wieder in Betrieb genommen werden. Der Ausbau der LED bringt eine Ersparnis von 3 – 4 mA.
+\paragraph{Verwendung des  Watchdog-Timer und Sleep Modus} Um jedoch wirklich Energie zu sparen muss der Mikrocontroller in einen Schlafmodus versetzt werden. Hierfür wird der Watchdog-Timer verwendet (siehe Kapitel \ref{sec:AvrMikrocontroller}). Der Watchdog Timer wird verwendet um den Mikrocontroller 8 Sekunden in den Schlafmodus zu versetzten. In dieser Zeit verbraucht der Mikrocontroller fast keinen Strom mehr, da dieser in der Zeit keine Programmabarbeitungen vornimmt. Die Umsetzung dieser Funktion wurde mit Hilfe einer \textit{Low-Power} Bibliothek (https://github.com/rocketscream/Low-Power) umgesetzt.
+\paragraph{} In Tabelle \ref{tbl:Energiesparen} sind die Einsparungen der verschiedenen Techniken zu sehen. Bei der Messung war der DHT22, BH1750 und das Funkmodul angeschlossen. Am besten hat die Kombination aus einem Arduino Pro Mini ohne LEDs im Sleep-Modus mit nur 182 $\mu$A  abgeschnitten. Mit diesen Techniken kann der energiesparende Sensorknoten über mehrere Monate hinweg über Batterie betrieben werden. 
+\begin{table}[]
+	\centering
+	\caption{Stromstärken bei den verschiedenen Energiespartechniken}
+	\label{tbl:Energiesparen}
+	\begin{tabular}{l|l|l}
+		& Normaler Modus   & Sleep Modus \\ \hline
+		Arduino Nano              & 19,61 - 29,31 mA & 7,62 mA     \\ \hline
+		Arduino Pro Mini          & 17,26 - 28,28 mA & 3,24 mA     \\ \hline
+		Arduino Nano ohne LED     & 15,71 - 26,20 mA & 3,09 mA     \\ \hline
+		Arduino Pro Mini ohne LED & 14,96 - 24,83 mA & 182 $\mu$A     
+	\end{tabular}
+\end{table}
