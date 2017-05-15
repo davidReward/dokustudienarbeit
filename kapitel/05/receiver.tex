@@ -109,8 +109,8 @@ Das \textit{IGNORE} in Zeile 3 erspart eine Prüfung, ob die Nachricht bereits v
 
 \subsection{Scheduling}
 \label{sec:scheduling}
-Das Receiverprogramm startet automatisch wenn der Raspberry Pi bootet. Außerdem sollte der Receiver den Betrieb automatisch wieder aufnehmen nachdem er ungewollter Weise beendet wurde. 
-Um das zu realisieren, nutzt man Systemd. Systemd ist ein Initialisierungssytem von Linux. Es ist das erste Programm das beim Boot startet und lädt weitere Programme nach. In diesem Fall auch den Receiver (receiverMesh.py)
+Das Receiverprogramm startet sobald der Raspberry Pi bootet. Außerdem sollte der Receiver den Betrieb automatisch wieder aufnehmen nachdem er ungewollter Weise beendet wurde. 
+Um das zu realisieren, nutzt man Systemd. Systemd ist ein Initialisierungssytem von Linux. Es ist das erste Programm das beim Boot startet und weitere Programme nachlädt. In diesem Fall auch den Receiver (receiverMesh.py).
 \lstset{language=bash, numbers=left, breaklines=true}
 \begin{lstlisting}
 [Unit]
@@ -125,7 +125,7 @@ Restart=on-abort
 [Install]
 WantedBy=multi-user.target
 \end{lstlisting}
-Um einen automatischen Start nach einem Fehler zu gewährleisten bedarf es Zeile 8. Systemd loggt derartige Fälle. So kann man Fehler identifizieren und beheben.
+Um einen automatischen Start nach einem Fehler zu gewährleisten bedarf es Zeile 8. Systemd loggt derartige Fälle womit man Fehler identifizieren und beheben kann.
 
 \subsection{Logging}
 \label{sec:logging}
