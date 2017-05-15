@@ -78,7 +78,7 @@ Das hochwertigste Bit fungiert als Vorzeichen. Das 30. Bit ist bei Null gesetzt,
     \end{tabular}
     \caption {Modi im ARM Statusregister}
 \end{table}
-%TODO Quelle: arm-2009.pdf
+\cite{arm2009}
 
 \subsubsection{Exceptions}
 Der ARM-Prozessoren kennen typischer sieben verschiedene Exceptions (Ausnahmen). Sie haben folgende Priorität:
@@ -99,7 +99,7 @@ Will der Prozessor beim Fetch auf eine Adresse zugreifen, auf die er kein Zugrif
 Generell muss der Assemblerprogrammierer die entsprechenden Exceptionroutinen implementieren. 
 
 
-%TODO Quelle: arm-2009.pdf 
+\cite{arm2009}
 
 \subsubsection{Memory Management Unit}
 ARM-Prozessoren verfügen wie auch x86-Prozessoren über eine \ac{MMU}. Dieser Hardware-Baustein hat die Aufgabe virtuelle Speicheradressen in reale Speicheradressen zu übersetzten. Dies hat mehrere Vorteile: 
@@ -119,7 +119,7 @@ Die Virtuelle Adresse (V-Address) besteht (vereinfacht) aus einer Adresse für d
 
 Dadurch, dass der Prozessor nicht mit realen Adressen arbeiten muss, muss der Programmierer oder Compiler die konkreten realen Adressen nicht kennen. Nun ist es möglich zu realisieren, dass es für Programme so aussieht, als wäre der zugeteilte Speicherbereich am Stück. Physikalisch ist der zugewiesene Speicher jedoch über den ganzen RAM verteilt. Ferner ist es auch der Fall, dass ein Betriebssystem ständig Programme startet und beendet. Endet ein Programm, so muss man den allokierten   Speicherbereich wieder dellokieren. Die virtuelle Adressierung verhindert in diesem Zusammenhang, dass groß Speicherbereiche "brach" liegen. Würde man kein virtuelle Adressierung verwenden, so ist nach dem Ende eines Programmes, dass 1 Gb Speicher benutzt hat, eine 1 Gb große Lücke im Speicher. Dieser Umstand kann zu Problemen führen, wenn ein neues Programm startet und viel Speicher benötigt. Im Falle der virtuellen Adressierung ist es irrelevant, ob der angeforderte Speicher am Stück ist oder ob die benutzen Speicherstellen über den RAM verteilt sind.    
 
-%TODO Quelle: Richter
+\cite{richter}
 
 \subsubsection{Externe Anschlüsse}
 Der Raspberry Pi verfügt über mehrere physikalische Schnittstellen. 
@@ -151,7 +151,7 @@ Bevor ein Master mit einer Operation beginnen kann, muss er prüfen, ob dieser f
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_frei}
-\caption{\ac{I2C} im freien Zustand}
+\caption{\ac{I2C} im freien Zustand \cite{cc}}
 \label{i2c_frei}
 \end{figure}
 
@@ -159,7 +159,7 @@ Nun kann der Master seine Transaktion mit der Startbedingung ankündigen. Dazu l
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_start}
-\caption{Startbedingung bei \ac{I2C}}
+\caption{Startbedingung bei \ac{I2C} \cite{cc}}
 \label{i2c_start}
 \end{figure}
 
@@ -167,7 +167,7 @@ Daten sind wie folgt kodiert: Für eine logische Null zieht der entsprechende Te
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_0}
-\caption{Logische 0 bei \ac{I2C}}
+\caption{Logische 0 bei \ac{I2C} \cite{cc}}
 \label{i2c_0}
 \end{figure}
 
@@ -176,7 +176,7 @@ Für eine logische Eins läßt der Busteilnehmer die Datenleitung auf HIGH. Auch
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_1}
-\caption{Logische 1 bei \ac{I2C}}
+\caption{Logische 1 bei \ac{I2C} \cite{cc}}
 \label{i2c_1}
 \end{figure}
 
@@ -184,7 +184,7 @@ Nur ein Master kann eine Operation starten mittels Startbedingung (sofern der Bu
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_ack}
-\caption{Acknowledgement bei \ac{I2C}}
+\caption{Acknowledgement bei \ac{I2C} \cite{cc}}
 \label{i2c_ack}
 \end{figure}
 
@@ -193,33 +193,28 @@ Erkennt ein Gerät seine Adresse, ist aber nicht verfügbar, so sendet es ein No
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2C_noAck}
-\caption{No-Acknowledgement bei \ac{I2C}}
+\caption{No-Acknowledgement bei \ac{I2C} \cite{cc}}
 \label{i2c_NoAck}
 \end{figure}
 
 Um eine Übertragung zu beenden, zieht der Master die Datenleitung auf LOW, die Taktleitung bleibt währenddessen auf HIGH. 
 
-%TODO Quelle Bilder: http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
+\cite{dembowski2015raspberry} \cite{lehmann}
 
-%TODO Quelle: Rasi Handbuch, VL Lehmann
 
 \subsubsection{\ac{SPI}}
 Bei \ac{SPI} kann man relativ hohe Datenübertragungsraten erreichen. Dazu darf allerdings die Wegstrecke der Leitungen nur relativ klein sein (auf einem Chip). Die Spezifikation von \ac{SPI} ist weiter gefasst als die von \ac{I2C}. Ferner handelt es sich bei \ac{SPI} um kein Bussystem im klassischen Sinne. Jedes Gerät benötigt nämlich unter anderem eine eigene Leitung. Auch eine exakte Spezifikation der Geräte sieht \ac{SPI} nicht vor. 
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/spi}
-\caption{SPI-Schema TODO Quelle Raspi Handbuch}
+\caption{SPI-Schema \cite{dembowski2015raspberry}}
 \label{spi}
 \end{figure}
 
 Es folgt eine Beschreibung, wie die \ac{SPI}-Kommunikation beim Raspberry Pi aussehen kann: Der Master legt einen Takt von 100 kHz auf die Taktleitung SCK. Nun selektiert er über eine Slave-select-Leitung (SS) einen Slave. Die SS-Leitung ist LOW-aktiv. Das heißt, dass die Leitung im unselektierten Zustand HIGH ist, im selektierten Zustand ist sie LOW. 
 
- 
+ \cite{dembowski2015raspberry} \cite{lehmann}
 
-
-
-
-%TODO Quelle: Rasi Handbuch, VL Lehmann
  
 \subsection{Software}
 Dieses Unterkapitel betrachtet die Software, die auf dem Raspberry Pi nutzbar ist und im Rahmen dieser Arbeit genutzt wurde.
@@ -241,7 +236,7 @@ Python ist sowohl eine Programmiersprache als auch der Name des entsprechenden I
 
 
 
-%TODO Quelle: https://www.python.org/doc/essays/comparisons/
+\cite{python}
 
 
 \subsubsection{PyCharm} 
@@ -262,7 +257,7 @@ Die Entwicklungsumgebung ist für die meisten Betriebssysteme verfügbar (Linux,
 
 https://en.wikipedia.org/wiki/PyCharm 
 \cite{dembowski2015raspberry}
-%TODO Quelle: handbuch
+
 
 
 

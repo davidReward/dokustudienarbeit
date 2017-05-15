@@ -21,8 +21,6 @@ Die Belegung der GPIO-Pins kann man dem Handbuch der RF24-Bibliothek entnehmen:
     \end{tabular}
 \end{table}
 
-TODO Quelle: \url{https://tmrh20.github.io/RF24/RPi.html}
-
 \subsection{Receiver}
 \label{sec:receiver}
 \textit{Receiver} meint die Software, die auf dem Raspberry Pi läuft und dort die Nachrichten den Arduinos empfängt. Anfangs war der Receiver in C implementiert. Empfangene Nachrichten (C-Structs) hat das C-Programm geparst (den Bitstrom wieder in einen Struct geschrieben) und in eine Datei geschrieben. Um zu verhindern, dass die Datei unnötig groß wird und um Zugriffe auf die SD-Karte zu verhindern, ging man dazu über eine named Pipe zu nutzen. Da named Pipes nur ein Eintrag im Dateisystem haben, die Speicherstelle jedoch auf den RAM gemappt ist, ist die sehr schnell. Ein zweites Programm in Python hat die empfangenen Daten verarbeitet. 
@@ -50,7 +48,7 @@ receive_payload = readRadio()
 
 
 
-TODO Quelle: \url{https://www.sparkfun.com/datasheets/Components/SMD/nRF24L01Pluss_Preliminary_Product_Specification_v1_0.pdf}   
+\cite{sparkfun}   
 
 \subsection{Kodierung}
 \label{sec:kodierung}
@@ -71,7 +69,7 @@ destinationAddr, originAddr, lastHopAddr, messageID, stationID, value, unit, tim
 \end{lstlisting}
 Die deklarierten Variablen erhalten den dementsprechenden Rückgabewert der Funktion \textit{unpack}. Als erstes Argument nimmt sie die Byte order. In diesem Fall ist sie \textit{little-endian}. Anschließend folgen die Datentypen. \textit{h} steht für Short, wobei es sich auf dem Arduino um einen Integer handelt (auf einem x86 würde es sich um einen Short handeln). \textit{f} steht für Float, eine Fließkommazahl und \textit{L} für einen usigned Long, einen long Integer ohne Vorzeichen. 
 
-Quelle TODO \url{https://docs.python.org/2.7/library/struct.html?highlight=struct#module-struct}
+\cite{pythonStruct}
 
 
 
