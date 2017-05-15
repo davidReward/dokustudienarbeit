@@ -149,38 +149,68 @@ Um einen reibungslosen Ablauf zu gewährleisten, organisiert sich der Bus durch
 \end{itemize}
 Bevor ein Master mit einer Operation beginnen kann, muss er prüfen, ob dieser frei ist. Ist der Bus frei, so sind beide Leitungen auf HIGH (fünf Volt). 
 
-%TODO : i2c_frei
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2c_frei}
+\caption{\ac{I2C} im freien Zustand}
+\label{i2c_frei}
+\end{figure}
 
 Nun kann der Master seine Transaktion mit der Startbedingung ankündigen. Dazu lässt er die Taktleitung SCL auf HIGH und legt die Datenleitung über einen Pull-down-Widerstand auf Masse (LOW). Diese Vorgehensweise ermöglicht die Mult-Master-Fähigkeit. Möchte jetzt ein weiterer Master eine Übertragung an diesem Bus starteten, so fällt ihm bei Prüfen des Busses auf, dass SDA LOW ist. An dieser Tatsache kann er auch nichts ändern. Der Strom fließt über den Pull-down-Widerstand des aktiven Masters auf Masse ab. Nur der aktive Master kann SDA wieder auf HIGH legen und den Bus damit wieder frei geben.  
 
-%TODO : i2c_start
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2c_start}
+\caption{Startbedingung bei \ac{I2C}}
+\label{i2c_start}
+\end{figure}
 
 Daten sind wie folgt kodiert: Für eine logische Null zieht der entsprechende Teilnehmer die Datenleitung (SDA) auf LOW. In der Zeit, in der die Taktleitung HIGH ist, gilt die logische Null. 
 
-%TODO : i2c_0
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2c_0}
+\caption{Logische 0 bei \ac{I2C}}
+\label{i2c_0}
+\end{figure}
+
 
 Für eine logische Eins läßt der Busteilnehmer die Datenleitung auf HIGH. Auch die logische Eins gilt so lange, bis SCL HIGH ist. 
 
-%TODO : i2c_1
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2c_1}
+\caption{Logische 1 bei \ac{I2C}}
+\label{i2c_1}
+\end{figure}
 
 Nur ein Master kann eine Operation starten mittels Startbedingung (sofern der Bus frei ist). Nach dem ein Master eine den Bus erfolgreich reserviert hat, schreibt er ein Byte auf die Leitung. Die ersten 7 Bit des Bytes sind eine Adresse. Sie gehört dem Slave, mit dem der Master kommunizieren möchte. Bei \ac{I2C}  kann man somit 128 verschiedene Adressen vergeben. Das letzte Bit von dem Byte gibt die Richtung des Informationsflusses an. Der Master kann entweder lesen (1) oder schreiben (0). Diesem ersten Byte lauschen alle Geräte. Erkennt ein Slave seine Adresse auf dem Bus und er ist verfügbar, so sendet er ein Acknowledge.
 
-%TODO i2c_ack
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2c_ack}
+\caption{Acknowledgement bei \ac{I2C}}
+\label{i2c_ack}
+\end{figure}
+
 
 Erkennt ein Gerät seine Adresse, ist aber nicht verfügbar, so sendet es ein No-Acknowledge.
 
-%TODO i2c-noAck
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/i2C_noAck}
+\caption{No-Acknowledgement bei \ac{I2C}}
+\label{i2c_NoAck}
+\end{figure}
 
 Um eine Übertragung zu beenden, zieht der Master die Datenleitung auf LOW, die Taktleitung bleibt währenddessen auf HIGH. 
 
-%TODO Bilder: http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
+%TODO Quelle Bilder: http://www.cc-zwei.de/wiki/index.php?title=I2C_Bus_Hintergrundwissen
 
 %TODO Quelle: Rasi Handbuch, VL Lehmann
 
 \subsubsection{\ac{SPI}}
 Bei \ac{SPI} kann man relativ hohe Datenübertragungsraten erreichen. Dazu darf allerdings die Wegstrecke der Leitungen nur relativ klein sein (auf einem Chip). Die Spezifikation von \ac{SPI} ist weiter gefasst als die von \ac{I2C}. Ferner handelt es sich bei \ac{SPI} um kein Bussystem im klassischen Sinne. Jedes Gerät benötigt nämlich unter anderem eine eigene Leitung. Auch eine exakte Spezifikation der Geräte sieht \ac{SPI} nicht vor. 
 
-%TODO Bild spi einfügen, Quelle rapi Handbuch
+\begin{figure}[h!] 
+\includegraphics[scale=0.3]{bilder/spi}
+\caption{SPI-Schema TODO Quelle Raspi Handbuch}
+\label{spi}
+\end{figure}
 
 Es folgt eine Beschreibung, wie die \ac{SPI}-Kommunikation beim Raspberry Pi aussehen kann: Der Master legt einen Takt von 100 kHz auf die Taktleitung SCK. Nun selektiert er über eine Slave-select-Leitung (SS) einen Slave. Die SS-Leitung ist LOW-aktiv. Das heißt, dass die Leitung im unselektierten Zustand HIGH ist, im selektierten Zustand ist sie LOW. 
 
@@ -232,7 +262,6 @@ Die Entwicklungsumgebung ist für die meisten Betriebssysteme verfügbar (Linux,
 
 https://en.wikipedia.org/wiki/PyCharm 
 
-%TODO Bild der IDE
 %TODO Quelle: handbuch
 
 
