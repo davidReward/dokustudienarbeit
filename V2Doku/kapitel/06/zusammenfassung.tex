@@ -1,10 +1,10 @@
 \section{Zusammenfassung}
 Zeitlich gesehen ging das Entwicklungsteam wie folgt vor:
 \begin{itemize}
-\item Verbindung zwischen Raspberry Pi und Arduino herstellen (\ref{sec:anbindung_raspi_arduino})
-\item Bestückung der Arduinos mit den Sensoren auf der eigens designeten Leiterplatine TDOO REF
-\item gleichzeitige Realisierung der Verarbeitung der Messdaten auf dem Raspberry Pi (\ref{sec:receiver})
-\item Erstellen der Messdatenvisualisierung \ref{sec:Datenvisualiserung} und der Messdatenbereitstellung (\ref{sec:webservice}) 
+\item Verbindung zwischen Raspberry Pi und Arduino herstellen (Kapitel \ref{sec:anbindung_raspi_arduino})
+\item Bestückung der Arduinos mit den Sensoren auf der eigens designeten Leiterplatine (siehe Kapitel \ref{sec:ProduktionsprozessSensornoten})
+\item gleichzeitige Realisierung der Verarbeitung der Messdaten auf dem Raspberry Pi (Kapitel \ref{sec:receiver})
+\item Erstellen der Messdatenvisualisierung (Kapitel \ref{sec:Datenvisualiserung}) und der Messdatenbereitstellung ( Kapitel \ref{sec:webservice}) 
 \end{itemize}
 
 Bei der Realisierung des Sensorknotens kam es zu einigen Problemen die zu lösen waren. Dazu gehörten unter anderem:
@@ -16,8 +16,8 @@ Bei der Realisierung des Sensorknotens kam es zu einigen Problemen die zu lösen
 \item Fehlverhalten der Funkmodule beim Wechseln zwischen Senden und Empfangen
 \end{enumerate}
 
-Beim ersten Fehler war es notwendig, wie in  \ref{sec:receiver} beschrieben, in eine andere Programmiersprache zu wechseln (Python). Die Installation von weiteren Bibliotheken konnte man dort mittels eines Tools einfach vollziehen. 
-Um Probleme bei der Kodierung zu eliminieren half es, Nachrichten explizit zu kodieren. Dies geschieht zwar zu Ungunsten der Rechenzeit auf dem Arduino, war jedoch effektiv (\ref{sec:kodierung}). 
-Weitere Probleme traten auf bei der Fertigung der Platinen. Aufgrund eines Planungsfehlers fehlte ein Widerstand \ref{sec:hwproblem}. Zur Option stand, die Platinen erneut mit den korrigierten Schaltplänen (siehe Anhang) erneut zu fertigen oder den fehlenden Widerstand manuell einzulöten. Aufgrund der relativ langen Lieferzeit entschied man sich dafür, die Widerstände einzulöten.
+Beim ersten Fehler war es notwendig, wie in Kapitel  \ref{sec:receiver} beschrieben, in eine andere Programmiersprache zu wechseln (Python). Die Installation von weiteren Bibliotheken konnte man dort mittels eines Tools einfach vollziehen. 
+Um Probleme bei der Kodierung zu eliminieren half es, Nachrichten explizit zu kodieren. Dies geschieht zwar zu Ungunsten der Rechenzeit auf dem Arduino, war jedoch effektiv (Kapitel \ref{sec:kodierung}). 
+Weitere Probleme traten auf bei der Fertigung der Platinen. Aufgrund eines Planungsfehlers fehlte ein Widerstand (siehe Kapitel \ref{sec:hwproblem}). Zur Option stand, die Platinen erneut mit den korrigierten Schaltplänen (siehe Anhang) erneut zu fertigen oder den fehlenden Widerstand manuell einzulöten. Aufgrund der relativ langen Lieferzeit entschied man sich dafür, die Widerstände einzulöten.
 Bei dem gleichzeitigen Zugriff mehrere Programme auf die SQLite-Datenbank zuzugreifen, traten Seiteneffekte auf. Abhilfe schaffte hier der Umstieg auf ein mächtigeres Datenbankmanagementsystem (MySQL, siehe \ref{sec:db}).
-In der Bibliothek des RF24-Moduls lauerte ebenfalls ein Fehler. Es war wohl nicht vorgesehen einen Wechseln zwischen Broadcast senden und empfangen zu vollziehen. Die Lösung lag in der Anpassung der Bibliothek, das ist in \ref{sec:MeshAlgorithmus} beschrieben.
+In der Bibliothek des RF24-Moduls lauerte ebenfalls ein Fehler. Es war wohl nicht vorgesehen einen Wechseln zwischen Broadcast senden und empfangen zu vollziehen. Die Lösung lag in der Anpassung der Bibliothek, das ist in Kapitel \ref{sec:MeshAlgorithmus} beschrieben.
