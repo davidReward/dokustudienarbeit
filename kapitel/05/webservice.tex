@@ -1,6 +1,6 @@
 \section{Webservice}
 \label{sec:webservice}
-Um von der Clientseitig für die Datenrepräsentation die Messdaten zu erhalten, kommt ein Webservice zum Einsatz. Der Webservice ist wie in Kapitel \ref{Topologie} TODO label erwähnt in Python implementiert. Das Microframework \textit{Flask} kam zum Einsatz. Es ermöglicht eine einfache und effektive Implementierung des Webservices. Der Webservice gibt die angefragten Ressourcen im JSON-Format zurück. 
+Um von der Clientseite für die Datenrepräsentation die Messdaten zu erhalten, kommt ein Webservice zum Einsatz. Der Webservice ist wie in Kapitel \ref{sec:Topologie} TODO label erwähnt in Python implementiert. Das Microframework \textit{Flask} kam zum Einsatz. Es ermöglicht eine einfache und effektive Implementierung des Webservices. Der Webservice gibt die angefragten Ressourcen im JSON-Format zurück. 
 
 \paragraph{Routen}
 Der Webservice verfügt über folgende Routen: 
@@ -30,7 +30,7 @@ Mit Hilfe der zweiten Route kann man alle Messdaten einer Station abrufen. Hier 
 "value": 993.0
 \end{lstlisting}
 Über die URI ist die Ressource direkt adressierbar. Dazu kann man die vierte oben genannte Route nutzen, wobei der String \textit{mdatum} der URI entspricht.Die URI ist in der Datenbank die ID. Sie ist auch der Primärschlüssel. Die Erzeugung dieser ID erfolgt wie in \ref{sec:hashing} beschrieben. 
-Die dritte Route kann man nutzen um eine Messdaten einer Größe für einen definierten Zeitraum zu erhalten:
+Die dritte Route kann man nutzen um Messdaten einer Größe für einen definierten Zeitraum zu erhalten:
 \lstset{language=python, numbers=left, breaklines=true}
 \begin{lstlisting}
 @app.route('/mdata/station/<int:station>/<int:unit>', methods=['GET'])
@@ -48,10 +48,10 @@ def get_mdataUnit(station, unit):
 
 abort(404)
 \end{lstlisting} 
-Die Methode nutzt POST-Parameter. In diesem Fall sind die POST-Parameter nicht optional, Zeile 8 prüft, ob sie gegeben sind. Sind sie gegeben und die Abfrage aus der Datenbank ist nicht leer, so springt Zeile 12 aus der Methode raus, ansonsten wirft Zeile 14 den 404 HTTP-Fehler (not found). 
+Die Methode nutzt POST-Parameter. In diesem Fall sind die POST-Parameter nicht optional, Zeile 8 prüft, ob sie gegeben sind. Ist die der Fall und die Abfrage aus der Datenbank nicht leer, so springt Zeile 12 aus der Methode raus, ansonsten wirft Zeile 14 den 404 HTTP-Fehler (not found). 
 
 \paragraph{Virtuelle Umgebung}
-Um das oben beschriebene Pythonprogramm sicher auf dem Webserver nginx zu veröffentlichen bedarf es im Idealfall einer virtuellen Pythonumgebung. Diese garantiert unter anderem, dass der User \textit{www-data} (er führt den Webserver aus) nicht unnötig viele Berechtigungen benötigt. Ferner kann die virtuelle Umgebung alle Abhängigkeiten beinhalten. Das Hostsystem muss neben der Installation von Python (ist bei Linux im Regelfall vorinstalliert) keine weiteren Voraussetzungen erfüllen. Im Rahmen dieser Arbeit kommt \textit{virtualenv} zum Einsatz. Mithilfe des Tools \textit{pip} kann man Python-Module (Bibliotheken) in dieser virtuellen Umgebung installieren. Die virtuelle Umgebung enthält auch eine Python-Binary. Ein    
+Um das oben beschriebene Pythonprogramm sicher auf dem Webserver nginx zu veröffentlichen, bedarf es im Idealfall einer virtuellen Pythonumgebung. Diese garantiert unter anderem, dass der User \textit{www-data} (er führt den Webserver aus) nicht unnötig viele Berechtigungen benötigt. Ferner kann die virtuelle Umgebung alle Abhängigkeiten beinhalten. Das Hostsystem muss neben der Installation von Python (ist bei Linux im Regelfall vorinstalliert) keine weiteren Voraussetzungen erfüllen. Im Rahmen dieser Arbeit kommt \textit{virtualenv} zum Einsatz. Mithilfe des Tools \textit{pip} kann man Python-Module (Bibliotheken) in dieser virtuellen Umgebung installieren. Die virtuelle Umgebung enthält auch eine Python-Binary. Ein    
 
 \paragraph{Veröffentlichung auf Webserver}
 Um dem Webserver nginx zu ermöglichen, ein Pythonprogramme auszuführen benötigt er einen Applikationsserver. \textit{uWSGI} ist einer dieser Server. Um die Pythonapplikation ausführen zu können ist er unter anderem wie folgt konfiguriert:
