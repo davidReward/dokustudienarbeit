@@ -7,7 +7,7 @@ Das gesamte Projekt des Sensorknoten lässt sich in fünf Ebenen unterteilen (si
 	\centering
 	\includegraphics[width=0.6\textwidth]{bilder/topologie}
 	\caption{Topologie Sensorknoten}
-	\label{sec:KonzeptionMeshNetz}
+	\label{img:KonzeptionMeshNetz}
 \end{figure}
 \paragraph{Energiesparender Sensorknoten} Der energiesparende Sensorknoten wurde mit einem Arduino Pro Mini realisiert. Dieser ist extrem energiesparend und übernimmt keinerlei Weiterleitungsfunktion im Mesh-Netz. Dieser Sensorknoten sendet seine Daten entweder direkt dem Raspberry Pi oder einem normalen Sensorknoten. Dieser leitet die  Nachricht dann zum Raspberry Pi weiter. Auf den genauen Aufbau des energiesparenden Sensorknoten wird in Kapitel \ref{sec:ArduinoProMini} eingegangen.
 \paragraph{Normaler Sensorknoten} Der normale Sensorknoten wird mit Hilfe eines Arduino Nano’s realisiert. Der Arduino Nano verfügt über eine permanente Stromversorgung, diese wird über den USB Port realisiert. Dieser Sensorknoten ist das Herz des Mesh-Netzes. Er übernimmt die Weiterleitung von Nachrichten im Netzwerk. Zusätzlich bestimmt er jede Minute seine eigenen Messwerte. Diese werden dann ebenfalls entweder an einen weiteren normalen Sensorknoten weitergeleitet oder wenn der Raspberry Pi in der Nähe ist direkt an ihn. 
