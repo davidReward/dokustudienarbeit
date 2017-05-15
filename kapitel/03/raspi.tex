@@ -47,7 +47,7 @@ Die ARM-Architektur besitzt folgende Eigenschaften:
     \end{tabular}
     \caption {ARM-Modi}
 \end{table}
-Ein Interrupt und ein Fast Interrupt unterscheiden sich in ihrer Priorität. Ein Fast Interrupt kann also einen Interrupt unterbrechen. Es darf jedoch nur ein Fast Interrupt zu einem Zeitpunkt auftreten. Der User-Modus ist der einzige Modus ohne Privilegien, die anderen Modi haben mehr Rechte wie der User-Modus. In User-Modus werden standardmäßig Programme ausgeführt. Einige Register sind Modussensitiv, soll heißen, dass sie nur in einem bestimmten Modus nutzbar sind. Wenn der Rechner startet, befindet sich der Prozessor im Supervisor-Modus. Später kann von jedem Modus aus gewechselt werden, außer aus dem User-Modus. Man kann ihn nur über einen Softwareinterrupt verlassen. 
+Ein Interrupt und ein Fast Interrupt unterscheiden sich in ihrer Priorität. Ein Fast Interrupt kann also einen Interrupt unterbrechen. Es darf jedoch nur ein Fast Interrupt zu einem Zeitpunkt auftreten. Der User-Modus ist der einzige Modus ohne Privilegien. Die anderen Modi haben mehr Rechte wie der User-Modus. In User-Modus werden standardmäßig Programme ausgeführt. Einige Register sind Modussensitiv, soll heißen, dass sie nur in einem bestimmten Modus nutzbar sind. Wenn der Rechner startet, befindet sich der Prozessor im Supervisor-Modus. Später kann von jedem Modus aus gewechselt werden, außer aus dem User-Modus. Man kann ihn nur über einen Softwareinterrupt verlassen. 
 \subsubsection{Register}
 Im User-Modus kann man über die Register R0 bis R12 frei verfügen. Register R13 ist der Stackpointer, Register R14 das Linkregister. Das Linkregister merkt sich die Return-Adresse um nach einem Funktionsaufruf zurückzukehren. Das Register R15 ist wird als Programm-Counter genutzt.
 
@@ -151,7 +151,7 @@ Bevor ein Master mit einer Operation beginnen kann, muss er prüfen, ob dieser f
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_frei}
-\caption{\ac{I2C} im freien Zustand \cite{cc}}
+\caption[I2C im freien Zustand]{\ac{I2C} im freien Zustand \cite{cc}}
 \label{i2c_frei}
 \end{figure}
 
@@ -159,7 +159,7 @@ Nun kann der Master seine Transaktion mit der Startbedingung ankündigen. Dazu l
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_start}
-\caption{Startbedingung bei \ac{I2C} \cite{cc}}
+\caption[Startbedingung I2C]{Startbedingung bei \ac{I2C} \cite{cc}}
 \label{i2c_start}
 \end{figure}
 
@@ -167,7 +167,7 @@ Daten sind wie folgt kodiert: Für eine logische Null zieht der entsprechende Te
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_0}
-\caption{Logische 0 bei \ac{I2C} \cite{cc}}
+\caption[Logische 0 bei I2C]{Logische 0 bei \ac{I2C} \cite{cc}}
 \label{i2c_0}
 \end{figure}
 
@@ -176,7 +176,7 @@ Für eine logische Eins läßt der Busteilnehmer die Datenleitung auf HIGH. Auch
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_1}
-\caption{Logische 1 bei \ac{I2C} \cite{cc}}
+\caption[Logische 1 bei I2C]{Logische 1 bei \ac{I2C} \cite{cc}}
 \label{i2c_1}
 \end{figure}
 
@@ -184,7 +184,7 @@ Nur ein Master kann eine Operation starten mittels Startbedingung (sofern der Bu
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2c_ack}
-\caption{Acknowledgement bei \ac{I2C} \cite{cc}}
+\caption[I2C Acknowledgement]{Acknowledgement bei \ac{I2C} \cite{cc}}
 \label{i2c_ack}
 \end{figure}
 
@@ -193,7 +193,7 @@ Erkennt ein Gerät seine Adresse, ist aber nicht verfügbar, so sendet es ein No
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/i2C_noAck}
-\caption{No-Acknowledgement bei \ac{I2C} \cite{cc}}
+\caption[I2C No-Acknowledgement]{No-Acknowledgement bei \ac{I2C} \cite{cc}}
 \label{i2c_NoAck}
 \end{figure}
 
@@ -207,7 +207,7 @@ Bei \ac{SPI} kann man relativ hohe Datenübertragungsraten erreichen. Dazu darf 
 
 \begin{figure}[h!] 
 \includegraphics[scale=0.3]{bilder/spi}
-\caption{SPI-Schema \cite{dembowski2015raspberry}}
+\caption[SPI Schema]{SPI-Schema \cite{dembowski2015raspberry}}
 \label{spi}
 \end{figure}
 
@@ -255,7 +255,6 @@ PyCharm ist eine Interierte Entwicklungsumgebung für Python. Sie wird von der F
 Die Entwicklungsumgebung ist für die meisten Betriebssysteme verfügbar (Linux, Windows, MacOS).
 
 
-https://en.wikipedia.org/wiki/PyCharm 
 \cite{dembowski2015raspberry}
 
 
