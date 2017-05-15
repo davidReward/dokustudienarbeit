@@ -1,0 +1,290 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       LaTeX Style für Vorlage für Berichte der DHBW-Karlsruhe
+%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
+%% $Id: bericht.sty,v 1.12 2010/01/21 09:21:56 vollmer Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etex} 
+\reserveinserts{20}	%behebt die Fehler, die Bigfoot verursacht! siehe  http://www.ureader.de/msg/136221230.aspx
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bericht}[2010/01/11 v1.0]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% needed packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}% Interne LaTeX Codierungen
+
+\usepackage{babel}      % Sprachanpassungen für generierte Texte wie "Inhaltsverzeichnis" etc
+\usepackage{xspace}     % http://www.ctan.org/tex-archive/help/Catalogue/entries/xspace.html
+\usepackage{array}      % http://www.ctan.org/tex-archive/help/Catalogue/entries/array.html
+\usepackage{tabularx}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/tabularx.html
+\usepackage{eurosym}    % \euro
+\usepackage{pdfpages}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/pdfpages.html
+\usepackage{needspace}  % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=nopagebrk
+\usepackage{lscape}		% Um einzelne Seiten im Querformat darstellen zu können
+
+\usepackage{graphicx}
+\usepackage[headings]{fullpage}
+%%%%%%% Layout Kopf und Fußzeile %%%%%%%%
+% siehe http://www.latex-project.org/guides/lb2-ch4.pdf s.234
+
+\setlength{\headheight}{15pt}
+
+\usepackage{extramarks}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{} % -- alle Bereiche leeren
+\rhead{\slshape\leftmark}
+\fancyfoot[C]{\thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\usepackage{microtype}  % http://tug.ctan.org/tex-archive/macros/latex/contrib/microtype/
+\usepackage{lmodern}    % Computern-Modern Schriftfamilie
+\usepackage{amssymb}    % Symbole
+\usepackage{framed}
+\usepackage{float}
+\usepackage[german=quotes]{csquotes}	
+%\usepackage{todo}       % Einfache Verwaltung und Erstellung von TODO's Markierungen
+\usepackage{subfigure}
+\usepackage{bigfoot}		
+\usepackage{booktabs}		%schönere Tabellen
+\usepackage{tabularx}		%Zur besseren Tabellendarstellung
+\usepackage{multirow}		
+
+\usepackage{rotating}
+\usepackage{ctable}
+\usepackage{threeparttable}
+\usepackage{parcolumns}
+
+% für Anti-Blocksatz in Tabellen
+\usepackage{array,ragged2e}
+
+\usepackage{abstract}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries\sffamily}
+
+\usepackage[bookmarksopen,
+						bookmarksnumbered,
+						plainpages=false,			%vermeidet diverse Warnungen
+						pdfpagelabels=true,		%ebenso
+						]{hyperref}
+						
+						
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% citation, bibliography, BIBLATEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wer etwas mehr "Kontrolle" über das Aussehen der Referenzen haben möchte, kann
+% auch das "biblatex"-Paket benutzen.
+\usepackage{etoolbox}  % http://dante.ctan.org/tex-archive/help/Catalogue/entries/etoolbox.html
+\usepackage[
+	hyperref=true,          % Klickbare Referenzen in der PDF-Datei
+  backref=true,           % In der Literaturref. die Seiten angeben, wo ein \cite dazu steht
+  bibencoding=inputenc,   % s. inputenc-Paket
+  backend = biber,
+  style = alphabetic,			% [Aut98]
+	%style=authoryear-comp,	% Autor Jahr
+	%style=numeric-comp,		% [1]
+	sorting=nty]{biblatex}  % http://dante.ctan.org/tex-archive/help/Catalogue/entries/biblatex.html
+	
+	
+	
+	
+
+%%%%%%%%%%%%%% Captions serifenlos und kursiv %%%%%%%%%%%%%
+\usepackage{caption}
+
+\renewcommand{\captionfont}{\small \sffamily %\slshape
+} 
+\renewcommand{\captionlabelfont}{\small \sffamily %\slshape 
+}
+
+%%%%%%%%%%%%%% Überschriften anpassen %%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{titlesec} % Textüberschriften anpassen
+
+% \titleformat{?Überschriftenklasse?}[Absatzformatierung?]{?Textformatierung?} {?Nummerierung?}{?Abstand zwischen Nummerierung und Überschriftentext?}{?Code vor der Überschrift?}[?Code nach der Überschrift?]
+
+\titleformat{\chapter}[display]
+{\sffamily \huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+{\sffamily\Large\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\sffamily\large\bfseries}{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+{\sffamily\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\titleformat{\paragraph}[runin]
+{\sffamily\normalsize\bfseries}{\theparagraph}{1em}{}
+
+\titleformat{\subparagraph}[runin]
+{\sffamily\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+\usepackage{setspace}
+
+
+%% \titlespacing{?Überschriftenklasse?}{?Linker Einzug?}{?Platz oberhalb?}{?Platz unterhalb?}[?rechter Einzug?]
+%
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titlespacing*{\subsection} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph} {0pt}{3.25ex plus 1ex minus .2ex}{1em}
+\titlespacing*{\subparagraph} {\parindent}{3.25ex plus 1ex minus .2ex}{1em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%verhindert, dass Fußnote auf mehrere Seiten verteilt wird.
+\interfootnotelinepenalty 10000
+
+% Hurenkinder und Schusterjungen verhindern
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=10000
+
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
+\renewcommand{\bibleftparen}{[}
+\renewcommand{\bibrightparen}{]}
+\renewcommand{\bibitemsep}{1ex}
+
+% Meine speziellen \cite-Kommandos:
+% Ausgabe des Untertitels (SUBTITLE) Feldes einer Referenz
+\DeclareCiteCommand{\citesubtitle}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+   \printfield[citetitle]{subtitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Ausgabe des Titels (TITLE) Feldes und der Referenz
+\DeclareCiteCommand{\citetitleref}
+  {\booltrue{citetracker}%
+   \booltrue{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+   \printfield[citetitle]{title} \cite{\thefield{entrykey}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% wie citetitleref, nur als Fussnote
+\DeclareCiteCommand{\citetitlerefFootnote}
+  {}
+  {\footnote{\citetitleref{\thefield{entrykey}}}}
+  {}
+  {}
+
+
+% Ausgabe der URL im HOWPUBLISHED Feld
+% Referenzieren von URL's, Format in der *.bib-Datei
+%@MISC{key,
+%  AUTHOR	= "....",
+%  TITLE	= "Webseite....",
+%  HOWPUBLISHED = "\url{http://www.domain.tld}",
+%  YEAR		= YYYY,    % Jahr  der Einsichtname, YYYY = Jahreszahl 4 Stellog
+%  MONTH	= ABC      % Monat der Einsichtnahme (jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov. dec
+%}
+\DeclareCiteCommand{\citeurl}
+  {\booltrue{citetracker}%
+   \booltrue{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+   \printfield[citetitle]{howpublished}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Ausgabe der URL im HOWPUBLISHED Feld und Referenz
+\DeclareCiteCommand{\citeurlref}
+  {\booltrue{citetracker}%
+   \booltrue{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+   \printfield[citetitle]{howpublished} \cite{\thefield{entrykey}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Augabe: Vorname Nachname des Autors
+\DeclareCiteCommand{\citefullauthor}
+  {\booltrue{citetracker}%
+   \booltrue{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+    \textsc{\printnames[byeditor]{author}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Programmlistings setzen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}   % http://www.ctan.org/tex-archive/macros/latex/contrib/listings/
+\usepackage{lstcustom} %http://rtsys.informatik.uni-kiel.de/trac/rtsys/wiki/Latex/Examples/Listings
+
+% Wie sollen die Überschriften benannt werden:
+\renewcommand{\lstlistingname}{Listing}
+
+% Wie die Liste der Listings, s. \lstlistoflistings in bericht.tex
+\renewcommand{\lstlistlistingname}{Listingverzeichnis}
+
+%allgemeine Parameter setzen für Listings
+\lstset{
+	float=p,
+	breaklines=t,					% Zeilenumbruch
+	captionpos=t,
+	columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape,
+	frame=tb,
+	basicstyle=\ttfamily\small,
+	%frameround=tftf,
+}
+
+
+% So kann man einen Stil für alle  Algorithmen definieren
+%\lstdefinestyle{algoBericht}{
+%  numbers=left,              % Zeilennummern einfügen
+%  numberstyle=\tiny,         % wie werden sie gesetzt
+%  numbersep=5pt,             % Abstand der Nummern zum Text
+%%  numberblanklines=false,    % bei Leerzeilen keine Nummer ausgeben (aber zählen)
+%  basicstyle=\ttfamily\footnotesize,% Wie soll der Algorithmus gesetzt werden
+%  %frame = trBL,
+%  %frameround=fttt,				% Runde Ecken
+%  breaklines=t,					% Zeilenumbruch
+%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abkürzungen, http://www.ctan.org/tex-archive/macros/latex/contrib/acronym/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[	printonlyused,
+							footnote,
+							%withpage,
+							nohyperlinks,
+							]{acronym}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formelverzeichnis, Dank an Andy Nöltner <ANoeltner@lstelcom.com>
+% Leider versursacht float zusammen mit Hyperref Warnungen
+% siehe http://www.tex.ac.uk/cgi-bin/texfaq2html?label=hyperdupdest
+% Wenn also das Formelverzeichnis nicht benötigt, dann das folgende
+% auskommentieren
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\newfloat{eq}{H}{for}[chapter]
+%\newcommand{\forname}{Formelverzeichnis}
+%\newcommand{\listofequations}{\listof{eq}{\forname}}
+%
+%\newcommand{\eqlabel}[2]{
+%        \label{#1}
+%        \addcontentsline{for}{eq}{(\ref{#1}) #2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endinput
+%%
+%% End of file `bericht.sty'.
